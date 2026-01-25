@@ -1,0 +1,32 @@
+
+{
+  "manifest_version": 3,
+  "name": "Facebook Avatar Guard Pro",
+  "version": "1.0.2",
+  "description": "Avatar Guard, Nickname & Account Sync Pro",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "webNavigation",
+    "notifications",
+    "cookies"
+  ],
+  "host_permissions": [
+    "*://*.facebook.com/*",
+    "*://*.accountscenter.facebook.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.facebook.com/*"],
+      "js": ["content.js"]
+    }
+  ]
+}
+
