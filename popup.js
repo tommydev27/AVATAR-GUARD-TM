@@ -1,4 +1,15 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Avatar Guard Display</title>
+</head>
+<body style="margin:0; padding:0;">
 
+<div id="status-container"></div>
+
+<script>
 const target = document.getElementById('status-container');
 
 if (target) {
@@ -31,7 +42,7 @@ if (target) {
 
 .card { 
     background: white; 
-    padding: 20px 20px 0; 
+    padding: 20px 8px 0; 
     border-radius: 12px; 
     box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
     text-align: center; 
@@ -135,3 +146,7 @@ if (target) {
 </div>
 `;
 }
+</script>
+
+</body>
+</html>
