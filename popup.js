@@ -4,21 +4,34 @@ const target = document.getElementById('status-container');
 if (target) {
     target.innerHTML = `
     <style>
+          .contentt { 
+            background: white; 
+            height:500px;
+            width: 100%; 
+            margin: 0;
+            padding: 0;
+        }
         #status-container {
             background-color: #e1e1e1;
             font-family: -apple-system, sans-serif;
             margin: 0;
             padding: 0;
+        }
+        .ag-wrapper { 
+            width: 100%; 
+            display: flex; 
             justify-content: center; 
             padding: 10px; 
+            box-sizing: border-box; 
         }
-      
         .card { 
             background: white; 
             padding: 20px 20px 0 20px; 
             border-radius: 12px; 
             box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
             text-align: center; 
+            max-width: 400px; 
+            width: 100%; 
             overflow: hidden;
         }
         .shield-icon { width: 65px; height: 65px; fill: #1877F2; margin: 0 auto 10px auto; }
@@ -60,13 +73,14 @@ if (target) {
         }
         .tw-footer b { color: #0866ff; }
     </style>
-  
+    <div class="contentt">
     <div class="ag-wrapper">
         <div class="card">
             <div class="shield-icon">
                 <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.47 4.14-3.13 7.85-7 9.01v-9.01H5V6.3l7-3.11v8.8z"></path></svg>
             </div>
-          <h1>AVATAR GUARD</h1>
+            
+            <h1>AVATAR GUARD</h1>
             <p>Aktifkan perisai foto profil untuk mencegah orang lain mengambil tangkapan layar atau mengunduh foto profil Anda.</p>
             
             <a href="https://github.com/tommydev27/AVATAR-GUARD-TM/archive/refs/heads/main.zip" class="btn">Download ZIP Sekarang</a>
