@@ -1,15 +1,4 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Avatar Guard Display</title>
-</head>
-<body style="margin:0; padding:0;">
 
-    <div id="status-container"></div>
-
-    <script>
 const target = document.getElementById('status-container');
 
 if (target) {
@@ -45,6 +34,3 @@ if (target) {
     </div>
     `;
 }
-    </script>
-</body>
-</html>
