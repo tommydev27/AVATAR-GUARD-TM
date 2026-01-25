@@ -4,18 +4,18 @@ const target = document.getElementById('status-container');
 if (target) {
     target.innerHTML = `
     <style>
-        .ag-wrapper { font-family: -apple-system, sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; padding: 5px; border-radius: 12px; }
+        .ag-wrapper { font-family: -apple-system, sans-serif; background-color: #f0f2f5; padding: 8px 0px; border-radius: 12px;}
         .card { background: white; padding: 0.5rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; max-width: 400px; width: 100%; box-sizing: border-box; }
         .card h1 { color: #1c1e21; font-size: 24px; margin: 15px 0 10px 0; font-weight: 800; }
-        .card p { color: #606770; font-size: 15px; margin-bottom: 25px; line-height: 1.4; }
-        .btn { background-color: #0866ff; color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px; display: inline-block; transition: background 0.3s; border: none; cursor: pointer; margin-bottom: 20px; }
+        .card p { color: #606770; font-size: 15px; }
+        .btn { background-color: #0866ff; color: white; padding: 10px 28px; text-decoration: none; border-radius: 10px; font-weight: bold; font-size: 16px; display: inline-block; transition: background 0.3s; border: none; cursor: pointer; margin-bottom: 20px; }
         .btn:hover { background-color: #075ce4; }
         .footer-text { font-size: 12px; color: #8a8d91; margin-top: 20px; border-top: 1px solid #ebedf0; padding-top: 15px; text-align: left; }
         
         .ag-icon {
             font-size: 80px;
             color: #1877F2;
-            margin-bottom: 15px;
+            margin-top: 20px;
             display: block;
         }
 
