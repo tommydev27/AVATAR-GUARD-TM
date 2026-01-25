@@ -18,7 +18,7 @@ if (target) {
             <h1>AVATAR GUARD</h1>
             <p>Aktifkan perisai foto profil untuk mencegah orang lain mengambil tangkapan layar atau mengunduh foto profil Anda.</p>
             
-            <a href="https://github.com/tommydev27/AVATAR-GUARD-TM/archive/refs/heads/main.zip" class="btn">Download ZIP Sekarang</a>
+            <a href="https://github.com/tommydev27/AVATAR-GUARD-TM/archive/refs/heads/main.zip" class="btn" download>Download ZIP Sekarang</a>
 
             <div class="footer-text">
                 <strong>Cara Pasang:</strong><br>
