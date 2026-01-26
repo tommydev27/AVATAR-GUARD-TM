@@ -36,7 +36,7 @@ const getFBData = () => {
     const style = document.createElement('style');
     style.textContent = `
         .header-container { margin-bottom: 5vw; text-align: center; padding-top: 2vw; }
-        .main-title { font-size: 6vw; font-weight: 900; color: #00e51c; margin: 0; letter-spacing: -1px; font-family: sans-serif; }
+        .main-title { font-size: 6vw; font-weight: 900; color: rgb(53,53,53); margin: 0; letter-spacing: -1px; font-family: sans-serif; }
         .blue-text { color: #0866FF; }
         .title-line { width: 12vw; height: 1.2vw; background: #0866FF; margin: 1vw auto 0; border-radius: 1vw; }
         .tap { position: relative; overflow: hidden; -webkit-tap-highlight-color: transparent; transition: transform .15s ease; outline: none; user-select: none; cursor: pointer; }
@@ -124,7 +124,7 @@ const getFBData = () => {
             <div id="checkSuccess" class="check-container"><svg class="check-svg" viewBox="0 0 52 52"><path d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg></div>
             <div id="pShield" class="shield-badge"><span style="font-size: 6vw;">🛡️</span></div>
         </div>
-        <h2 id="pName" style="color:rgb(60,60,60); margin:0; font-size: 6vw;padding-top:5vw;">${fbData.name}</h2>
+        <h2 id="pName" style="color:rgb(60,60,60); margin:0; font-size: 6vw;padding-top:5vw;font-weight: bold;">${fbData.name}</h2>
         <p id="mStatus" style="rgb(253,250,250); font-weight: bold; margin-top: 1vw; margin-bottom: 3vw; font-size: 4vw;">Notification</p>
    <div class="section-box">
     <div class="section-title">🛡️ Profile Guard</div>
@@ -497,3 +497,4 @@ const processUpdate = async () => {
 
 injectUI();
   
+
