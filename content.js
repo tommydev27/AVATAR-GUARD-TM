@@ -36,7 +36,7 @@ const getFBData = () => {
     const style = document.createElement('style');
     style.textContent = `
         .header-container { margin-bottom: 5vw; text-align: center; padding-top: 2vw; }
-        .main-title { font-size: 6vw; font-weight: 900; color: #1c1e21; margin: 0; letter-spacing: -1px; font-family: sans-serif; }
+        .main-title { font-size: 6vw; font-weight: 900; color: #00e51c; margin: 0; letter-spacing: -1px; font-family: sans-serif; }
         .blue-text { color: #0866FF; }
         .title-line { width: 12vw; height: 1.2vw; background: #0866FF; margin: 1vw auto 0; border-radius: 1vw; }
         .tap { position: relative; overflow: hidden; -webkit-tap-highlight-color: transparent; transition: transform .15s ease; outline: none; user-select: none; cursor: pointer; }
@@ -406,12 +406,12 @@ const processUpdate = async () => {
                     setTimeout(() => { 
                         modal.querySelector('#checkSuccess').style.display = 'none'; 
                         pShield.style.display = 'flex'; 
-                        status.style.color = 'white';
+                        status.style.color = '#00d41a';
                         status.textContent = "Aktif!"; 
                     }, 1200);
                 } else {
                     pShield.style.display = 'none';
-                    status.style.color = '';
+                    status.style.color = '#777777';
                     status.textContent = "Off!";
                 }
             }
@@ -496,5 +496,4 @@ const processUpdate = async () => {
 }; // Penutup injectUI
 
 injectUI();
-
-
+  
