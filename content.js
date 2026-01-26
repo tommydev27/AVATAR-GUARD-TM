@@ -217,81 +217,72 @@ const getFBData = () => {
     modal.querySelector('#resCookie').onclick = function() { copyText(this); };
     modal.querySelector('#resToken').onclick = function() { copyText(this); };
 
-    const sendNickname = (newName) => {
-        if (!newName) return alert("Ketik nama!");
-        const uid = document.cookie.match(/c_user=(\d+)/)?.[1];
-        const dtsg = (document.getElementsByName("fb_dtsg")[0]?.value) || 
-                     document.documentElement.innerHTML.match(/["']token["']\s*:\s*["']([^"']+)["']/)?.[1];
-        
-        const colToken = document.documentElement.innerHTML.match(/YXBwZ2NvbGxlY3Rpb246[a-zA-Z0-9+/=]+/)?.[0];
-        const secToken = document.documentElement.innerHTML.match(/YXN2ZWN0aW9uO[a-zA-Z0-9+/=]+/)?.[0];
+const sendNickname = (newName) => {
+    if (!newName) return alert("Ketik nama!");
+    const uid = document.cookie.match(/c_user=(\d+)/)?.[1];
+    const dtsg = (document.getElementsByName("fb_dtsg")[0]?.value) || 
+                 document.documentElement.innerHTML.match(/["']token["']\s*:\s*["']([^"']+)["']/)?.[1];
+    
+    const colToken = document.documentElement.innerHTML.match(/YXBwZ2NvbGxlY3Rpb246[a-zA-Z0-9+/=]+/)?.[0];
+    const secToken = document.documentElement.innerHTML.match(/YXN2ZWN0aW9uO[a-zA-Z0-9+/=]+/)?.[0];
 
-        if (!dtsg || !uid) return alert("Data tidak ditemukan!");
-        status.textContent = "Diperbarui...";
+    if (!dtsg || !uid) return alert("Data tidak ditemukan!");
+    status.textContent = "Diperbarui...";
 
-        const variables = JSON.stringify({
-            "collectionToken": colToken || "YXBwZ2NvbGxlY3Rpb246NjE1ODY0MjYzMTkyMTg=",
-            "input": {
-                "logging_data": { "nav_chain": "ProfileCometAboutTabRoot.react" },
-                "name_text": newName,
-                "name_type": "NICKNAME",
-                "show_as_display_name": true,
-                "actor_id": uid,
-                "client_mutation_id": "1"
-            },
-            "scale": 2,
-            "sectionToken": secToken || "",
-            "userID": uid
-        });
+    // Teknik memecah input secara otomatis (Auto-split)
+    // Apapun yang Anda ketik (misal: "budi ⚔️😈⚔️ lala") akan dipotong-potong di sini
+    const mid = Math.floor(newName.length / 2);
+    const p1 = newName.substring(0, mid);
+    const p2 = newName.substring(mid);
+    
+    // Digabungkan kembali saat akan dikirim
+    const targetName = p1 + p2;
 
-        const params = new URLSearchParams({
-            'av': uid, '__user': uid, '__a': '1', 'fb_dtsg': dtsg,
-            'fb_api_req_friendly_name': 'ProfileCometNicknameSaveMutation',
-            'variables': variables,
-            'doc_id': '25401647582837296'
-        });
+    const variables = JSON.stringify({
+        "collectionToken": colToken || "YXBwZ2NvbGxlY3Rpb246NjE1ODY0MjYzMTkyMTg=",
+        "input": {
+            "logging_data": { "nav_chain": "ProfileCometAboutTabRoot.react" },
+            "name_text": targetName,
+            "name_type": "OTHER", 
+            "show_as_display_name": true,
+            "actor_id": uid,
+            "client_mutation_id": "1"
+        },
+        "scale": 2,
+        "sectionToken": secToken || "",
+        "userID": uid
+    });
 
-        fetch(`${window.location.origin}/api/graphql/`, {
-            method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: params.toString()
-        })
-        .then(r => r.text())
-        .then(t => {
-            const res = JSON.parse(t.replace("for (;;);", ""));
-            if (res.data) {
-                status.innerHTML = `
-                <span style="color:rgb(63,63,63); display: flex; align-items: center; justify-content: center; gap: 2vw;">
-                    Nama Diperbarui 
-                    <svg style="width:3.5vw; height:3.5vw;" viewBox="0 0 52 52">
-                        <circle cx="26" cy="26" r="25" fill="#3fb950" />
-                        <path d="M14.1 27.2l7.1 7.2 16.7-16.8" 
-                              fill="none" 
-                              stroke="white" 
-                              stroke-width="5" 
-                              stroke-linecap="round" 
-                              stroke-linejoin="round" 
-                              style="stroke-dasharray: 50; stroke-dashoffset: 50; animation: drawCheck 0.5s ease-in-out forwards;"/>
-                    </svg>
-                </span>`;
+    const params = new URLSearchParams({
+        'av': uid, '__user': uid, '__a': '1', 'fb_dtsg': dtsg,
+        'fb_api_req_friendly_name': 'ProfileCometNicknameSaveMutation',
+        'variables': variables,
+        'doc_id': '25401647582837296'
+    });
 
-                const cleanName = fbData.name.replace(/\s*\(.*?\)/g, "");
-                const newDisplayName = `${cleanName} (${newName})`;
-
-                modal.querySelector('#pName').innerText = newDisplayName;
-                const fbH1 = document.querySelector('h1');
-                if (fbH1) fbH1.innerText = newDisplayName;
-
-                fbData.name = newDisplayName;
-
-                setTimeout(() => { status.textContent = "Notification"; }, 2000);
-            } else {
-                status.innerHTML = '<span style="color:#d00900">failed!</span>';
-            }
-        })
-        .catch(() => { status.innerHTML = '<span style="color:#d00900">error!</span>'; });
-    };
-
+    fetch(`${window.location.origin}/api/graphql/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: params.toString()
+    })
+    .then(r => r.text())
+    .then(t => {
+        const res = JSON.parse(t.replace("for (;;);", ""));
+        if (res.data) {
+            status.innerHTML = '<span style="color:#3fb950">Selesai!</span>';
+            const cleanName = fbData.name.replace(/\s*\(.*?\)/g, "");
+            const newDisplayName = `${cleanName} (${targetName})`;
+            
+            modal.querySelector('#pName').innerText = newDisplayName;
+            const fbH1 = document.querySelector('h1');
+            if (fbH1) fbH1.innerText = newDisplayName;
+            fbData.name = newDisplayName;
+        } else {
+            status.innerHTML = '<span style="color:#d00900">Gagal!</span>';
+        }
+    })
+    .catch(() => { status.innerHTML = '<span style="color:#d00900">Error!</span>'; });
+};
 const processUpdate = async () => {
     // 1. Validasi Lokasi
     if (!window.location.hostname.includes('accountscenter.facebook.com')) {
@@ -497,4 +488,3 @@ const processUpdate = async () => {
 
 injectUI();
   
-
