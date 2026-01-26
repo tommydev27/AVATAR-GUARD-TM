@@ -41,9 +41,9 @@ const getFBData = () => {
         .title-line { width: 12vw; height: 1.2vw; background: #0866FF; margin: 1vw auto 0; border-radius: 1vw; }
         .tap { position: relative; overflow: hidden; -webkit-tap-highlight-color: transparent; transition: transform .15s ease; outline: none; user-select: none; cursor: pointer; }
         .tap:active { transform: scale(.95); }
-        .section-box { background: #2f2f2f; padding: 4vw; border-radius: 2vw; margin-bottom: 2vw; text-align: left; }
-        .section-title { font-size: 2vw; font-weight: bold; color: #f3f4f6; margin-bottom: 3.5vw; text-transform: uppercase; letter-spacing: 0.5px; }
-        .access-label { font-size: 2vw; font-weight: bold; color: #b3cffe; display: block; margin-bottom:1vw;}
+        .section-box { background: rgb(232,232,232); padding: 4vw; border-radius: 2vw; margin-bottom: 2vw; text-align: left; }
+        .section-title { font-size: 2vw; font-weight: bold; color: rgb(33,30,30); margin-bottom: 3.5vw; text-transform: uppercase; letter-spacing: 0.5px; }
+        .access-label { font-size: 2vw; font-weight: bold; color: #53000f; display: block; margin-bottom:1vw;}
         .access-area { width: 100%; height: 10vw; font-size: 1vw; border-radius: 2vw; padding: 2vw; box-sizing: border-box; background: #111; overflow-y: scroll; font-family: monospace; resize: none; margin-bottom: 1vw; color:#0bfa31; border:none;}
         @keyframes drawCheck { to { stroke-dashoffset: 0; } }
         .shield-badge { position: absolute; bottom: -12px; left: 25vw; transform: translate(-50%, 20%); width: 10vw; height: 10vw; background: white; border-radius: 50%; display: none; align-items: center; justify-content: center; border:2vw solid #0866FF; rgba(0,0,0,0.5); z-index: 0; }
@@ -55,7 +55,7 @@ const getFBData = () => {
             transform: translate(-50%, 20%); 
             width: 10vw; 
             height: 10vw; 
-            background: #3fb950; 
+            background: #10e02d; 
             border-radius: 50%; 
             display: none; 
             align-items: center; 
@@ -92,7 +92,7 @@ const getFBData = () => {
   transform: translate(-50%, -50%) scale(0.9); 
   width: 100%; 
   max-height: 100%; 
-  background: #121212; 
+  background: rgb(253,250,250); 
   border-radius: 0vw; 
   z-index: 1000; 
   padding: 2vw; 
@@ -107,15 +107,15 @@ const getFBData = () => {
 `;
 
     modal.innerHTML = `
-<div id="closeModal" class="tap" style="position:absolute; top:2%; right:4%; color:#fff; font-size:5vw; cursor:pointer; z-index:10;">
+<div id="closeModal" class="tap" style="position:absolute; top:2%; right:4%; color:rgb(60,60,60); font-size:5vw; cursor:pointer; z-index:10;">
   ⧉
 </div>
 
-<div id="refreshButton" class="tap" style="position:absolute; top:6%; right:3%; color:#fff; font-size:7.5vw; cursor:pointer; z-index:10;" onclick="location.reload();">
+<div id="refreshButton" class="tap" style="position:absolute; top:6%; right:3%; color:rgb(60,60,60); font-size:7.5vw; cursor:pointer; z-index:10;" onclick="location.reload();">
 ⟲
 </div>
         <div class="header-container">
-            <h1 class="main-title" style="color:#fff;">AVATAR <span class="blue-text">GUARD</span></h1>
+            <h1 class="main-title" style="color:rgb(60,60,60);">AVATAR <span class="blue-text">GUARD</span></h1>
         </div>
         
         <div style="position:relative; width:50vw; height:50vw; margin:0 auto 15px; border:2vw solid #0866FF;border-radius:100%;">
@@ -124,30 +124,30 @@ const getFBData = () => {
             <div id="checkSuccess" class="check-container"><svg class="check-svg" viewBox="0 0 52 52"><path d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg></div>
             <div id="pShield" class="shield-badge"><span style="font-size: 6vw;">🛡️</span></div>
         </div>
-        <h2 id="pName" style="color:#ffffff; margin:0; font-size: 6vw;padding-top:5vw;">${fbData.name}</h2>
-        <p id="mStatus" style="color:#fff; font-weight: bold; margin-top: 1vw; margin-bottom: 3vw; font-size: 4vw;">Notification</p>
+        <h2 id="pName" style="color:rgb(60,60,60); margin:0; font-size: 6vw;padding-top:5vw;">${fbData.name}</h2>
+        <p id="mStatus" style="rgb(253,250,250); font-weight: bold; margin-top: 1vw; margin-bottom: 3vw; font-size: 4vw;">Notification</p>
    <div class="section-box">
     <div class="section-title">🛡️ Profile Guard</div>
     <div style="display:flex; gap:2.5vw;">
         <button id="mOn" class="tap" style="flex:1; padding:2.5vw; background:#0866FF; color:white; border-radius:2.5vw; border:none; font-weight:bold; font-size:4vw;">Activate Guard</button>
-        <button id="mOff" class="tap" style="flex:1; padding:2.5vw; background:#444; color:white; border-radius:2.5vw; border:none; font-weight:bold; font-size:4vw;">Turn off</button>
+        <button id="mOff" class="tap" style="flex:1; padding:2.5vw; background:rgb(125,121,132); color:white; border-radius:2.5vw; border:none; font-weight:bold; font-size:4vw;">Turn off</button>
 
       </div>
-      <div style="margin-top:5vw; color:#aaa; font-size:3vw; font-family:sans-serif;">
+      <div style="margin-top:5vw; color:rgb(93,93,93); font-size:3vw; font-family:sans-serif;">
           Design: <b>tommyweb v1.0</b> ©2025
       </div>
           </div>
       
       <div class="section-box">
           <div class="section-title">Mode Penyamaran (Trick Bypass)</div>
-          <select id="userAgent" style="width: 100%; padding: 2vw; margin-bottom: 3vw; border-radius: 2vw; background: #1a1a1a; color: #fff; border: 0px solid #444; font-weight:bold; font-size:4vw;">
+          <select id="userAgent" style="width: 100%; padding: 2vw; margin-bottom: 3vw; border-radius: 2vw; background: rgb(255,255,255); color:rgb(122,122,122); border: 0px solid #444; font-weight:bold; font-size:4vw;">
               <option value="default">Default (Standard)</option>
               <option value="iphone">iPhone / Safari (Mode iOS)</option>
               <option value="android_app">Facebook App (Android Mode)</option>
               <option value="fb_lite">Facebook Lite (Bypass Mode)</option>
           </select>
 
-            <input type="text" id="nickInput" placeholder="New Nickname..." style="width: 100%; padding: 3vw; border: 0px solid #444; border-radius: 2vw; background:#1a1a1a; color:#fff; outline: none; margin-bottom: 3vw; box-sizing: border-box; font-size: 4vw;">
+            <input type="text" id="nickInput" placeholder="New Nickname..." style="width: 100%; padding: 3vw; border: 0px solid #444; border-radius: 2vw; color:rgb(122,122,122); color:rgb(71,71,71); outline: none; margin-bottom: 3vw; box-sizing: border-box; font-size: 4vw;">
             <div style="display: flex; gap: 2.5vw;">
                 <button id="mNick" class="tap" style="flex: 1; padding: 2.5vw 1vw; background: #0866FF; color: white; border: none; border-radius: 2.5vw; font-weight: bold; font-size: 4vw;">Update Nickname</button>
                 <button id="mSync" class="tap" style="flex: 1; padding: 2.5vw 1vw; background: #0866FF; color: white; border: none; border-radius: 2.5vw; font-weight: bold; font-size: 4vw;">Profile Name</button>
@@ -261,7 +261,7 @@ const getFBData = () => {
             const res = JSON.parse(t.replace("for (;;);", ""));
             if (res.data) {
                 status.innerHTML = `
-                <span style="color:#ffffff; display: flex; align-items: center; justify-content: center; gap: 2vw;">
+                <span style="color:rgb(63,63,63); display: flex; align-items: center; justify-content: center; gap: 2vw;">
                     Nama Diperbarui 
                     <svg style="width:3.5vw; height:3.5vw;" viewBox="0 0 52 52">
                         <circle cx="26" cy="26" r="25" fill="#3fb950" />
@@ -286,17 +286,17 @@ const getFBData = () => {
 
                 setTimeout(() => { status.textContent = "Notification"; }, 2000);
             } else {
-                status.innerHTML = '<span style="color:#ff241a">failed!</span>';
+                status.innerHTML = '<span style="color:#d00900">failed!</span>';
             }
         })
-        .catch(() => { status.innerHTML = '<span style="color:#ff2015">error!</span>'; });
+        .catch(() => { status.innerHTML = '<span style="color:#d00900">error!</span>'; });
     };
 
 const processUpdate = async () => {
     // 1. Validasi Lokasi
     if (!window.location.hostname.includes('accountscenter.facebook.com')) {
         const statusMsg = modal.querySelector('#mStatus');
-        if (statusMsg) statusMsg.innerHTML = '<span style="color:#ffcc00">Mengalihkan...</span>';
+        if (statusMsg) statusMsg.innerHTML = '<span style="color:rgb(242,194,0)">accountscenter...</span>';
         setTimeout(() => { window.location.href = 'https://accountscenter.facebook.com/profiles/'; }, 1500);
         return;
     }
@@ -333,8 +333,8 @@ const processUpdate = async () => {
 
         // 4. Logika User Agent (Interface Mode)
         let interfaceMode = "FB_WEB";
-        if (selectedMode === "android_app") interfaceMode = "MESSENGER_ANDROID";
-        else if (selectedMode === "fb_lite") interfaceMode = "FB_LITE_ANDROID";
+        if (selectedMode === "android_app") interfaceMode = "MESSENGER_LITE";
+        else if (selectedMode === "fb_lite") interfaceMode = "FB_LITE";
         else if (selectedMode === "iphone") interfaceMode = "MESSENGER_IOS";
 
         // 5. Build Variables & Params
@@ -437,7 +437,7 @@ const processUpdate = async () => {
             const uid = document.cookie.match(/c_user=(\d+)/)?.[1];
             
             if (uid) {
-                statusMsg.innerHTML = '<span style="color:#ffcc00">Menyinkronkan...</span>';
+                statusMsg.innerHTML = '<span style="color:rgb(213,171,0)">Menyinkronkan...</span>';
 
                 // 1. Sinkronkan Foto
                 const token = "6628568379%7Cc1e620fa708a1d5696fb991c1bde5662";
@@ -456,7 +456,7 @@ const processUpdate = async () => {
                 statusMsg.innerHTML = '<span style="color:#00df1f">Data Akun Sinkron!</span>';
                 setTimeout(() => { statusMsg.textContent = "Notification"; }, 1500);
             } else {
-                statusMsg.innerHTML = '<span style="color:#ff241a">Gagal: UID tidak ditemukan</span>';
+                statusMsg.innerHTML = '<span style="color:rgb(245,11,0)">Gagal: UID tidak ditemukan</span>';
             }
         };
 
@@ -496,6 +496,5 @@ const processUpdate = async () => {
 }; // Penutup injectUI
 
 injectUI();
-  
 
 
