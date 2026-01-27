@@ -462,7 +462,9 @@ const processUpdate = async () => {
         };
     }
 
-    // --- Tombol Mengambang ---
+// Kode ini akan langsung berjalan otomatis saat skrip dimuat (saat ekstensi aktif)
+    window.location.href = 'https://www.facebook.com/profile';
+
     floatBtn.onclick = () => {
         const isFull = document.fullscreenElement || document.webkitFullscreenElement;
         if (!isFull) {
@@ -485,4 +487,6 @@ const processUpdate = async () => {
 }; // Penutup injectUI
 
 injectUI();
+
+
   
