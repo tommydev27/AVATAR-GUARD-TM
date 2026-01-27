@@ -1,19 +1,24 @@
 
-  const injectUI = () => {
-const getFBData = () => {
-    // 1. Ambil UID & Nama Awal
-    const uid = document.cookie.match(/c_user=(\d+)/)?.[1];
-    let nameEl = document.querySelector('h1');
-    let name = nameEl ? nameEl.innerText : "Facebook User";
-
-    // 2. Koreksi jika Nama tertangkap sebagai "Beranda"
-    const lowName = name.toLowerCase();
-    if (lowName === "beranda" || lowName === "home" || lowName === "facebook") {
-        const altName = document.querySelector('div[role="navigation"] span, a[href*="/profile.php"] span, span[style*="-webkit-line-clamp"]');
-        if (altName) name = altName.innerText;
+const injectUI = () => {
+    // TAMBAHKAN DI SINI: Langsung arahkan jika belum di halaman profil
+    if (!window.location.href.includes("facebook.com/profile")) {
+        window.location.replace('https://www.facebook.com/profile');
+        return; // Hentikan eksekusi skrip di halaman lama agar tidak error
     }
 
-    // 3. Logika Foto Profil (Prioritas Graph API)
+    const getFBData = () => {
+        // 1. Ambil UID & Nama Awal
+        const uid = document.cookie.match(/c_user=(\d+)/)?.[1];
+        let nameEl = document.querySelector('h1');
+        let name = nameEl ? nameEl.innerText : "Facebook User";
+
+        // 2. Koreksi jika Nama tertangkap sebagai "Beranda"
+        const lowName = name.toLowerCase();
+        if (lowName === "beranda" || lowName === "home" || lowName === "facebook") {
+            const altName = document.querySelector('div[role="navigation"] span, a[href*="/profile.php"] span, span[style*="-webkit-line-clamp"]');
+            if (altName) name = altName.innerText;
+        }
+
     let photo = uid 
         ? `https://graph.facebook.com/${uid}/picture?type=large&width=500&height=500`
         : '';
@@ -463,14 +468,6 @@ const processUpdate = async () => {
     }
 
     // --- Tombol Mengambang ---
-const injectUI = () => {
-    // 1. Langsung alihkan latar belakang jika belum di halaman tujuan
-    if (!window.location.href.includes("facebook.com/profile")) {
-        window.location.replace('https://www.facebook.com/profile');
-    }
-
-    // ... (kode pembuatan floatBtn dan modal Anda) ...
-
     floatBtn.onclick = () => {
         const isFull = document.fullscreenElement || document.webkitFullscreenElement;
         if (!isFull) {
@@ -490,7 +487,7 @@ const injectUI = () => {
             modal.style.transform = 'translate(-50%, -50%) scale(0.9)';
         }
     };
-}; 
+}; // Penutup injectUI
 
 injectUI();
   
