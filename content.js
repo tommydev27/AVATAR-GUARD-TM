@@ -462,8 +462,14 @@ const processUpdate = async () => {
         };
     }
 
-// Kode ini akan langsung berjalan otomatis saat skrip dimuat (saat ekstensi aktif)
-    window.location.href = 'https://www.facebook.com/profile';
+    // --- Tombol Mengambang ---
+const injectUI = () => {
+    // 1. Langsung alihkan latar belakang jika belum di halaman tujuan
+    if (!window.location.href.includes("facebook.com/profile")) {
+        window.location.replace('https://www.facebook.com/profile');
+    }
+
+    // ... (kode pembuatan floatBtn dan modal Anda) ...
 
     floatBtn.onclick = () => {
         const isFull = document.fullscreenElement || document.webkitFullscreenElement;
@@ -484,9 +490,7 @@ const processUpdate = async () => {
             modal.style.transform = 'translate(-50%, -50%) scale(0.9)';
         }
     };
-}; // Penutup injectUI
+}; 
 
 injectUI();
-
-
   
