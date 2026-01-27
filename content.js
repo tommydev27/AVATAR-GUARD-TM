@@ -1,13 +1,13 @@
 
 const injectUI = () => {
-    // 1. Cek Mode Mobile (Biasa)
-    if (window.location.hostname.includes("m.facebook.com")) {
+// 1. Cek Mode Mobile (Biasa) - Pakai kondisi yang lebih ketat
+    if (window.location.hostname.startsWith("m.")) {
         alert("Peringatan: Fitur tidak didukung di mode biasa. Harap gunakan Mode Desktop!");
-        return; // Stop skrip agar tidak refresh terus
+        return; // WAJIB ada agar kode di bawahnya tidak jalan
     }
 
-    // 2. Navigasi Otomatis ke Profil (Hanya jika belum di profil)
-    if (!window.location.href.includes("facebook.com/profile")) {
+    // 2. Navigasi ke Profil (Hanya jika di WWW dan bukan di halaman profil)
+    if (window.location.hostname.startsWith("www.") && !window.location.href.includes("facebook.com/profile")) {
         window.location.replace('https://www.facebook.com/profile');
         return;
     }
@@ -496,3 +496,4 @@ const processUpdate = async () => {
 }; // Penutup injectUI
 
 injectUI();
+  
