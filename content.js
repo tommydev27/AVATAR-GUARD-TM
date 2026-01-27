@@ -1,19 +1,24 @@
 
 const injectUI = () => {
-    // 1. Cek jika di mode mobile, langsung matikan skrip agar tidak refresh
-    if (window.location.hostname.includes("m.facebook.com")) {
+    // 1. Kunci Mode Mobile: Langsung STOP dan beri alert (Anti-Refresh)
+    if (window.location.hostname === "m.facebook.com") {
         alert("Gunakan Mode Desktop!");
         return; 
     }
 
-    // 2. Navigasi ke profil yang lebih stabil
-    if (!window.location.pathname.includes("/me") && !window.location.pathname.includes("/profile.php")) {
+    // 2. Navigasi Stabil: Hanya pindah jika benar-benar di luar profil
+    const isProfile = window.location.pathname.includes("/me") || 
+                      window.location.pathname.includes("/profile.php") ||
+                      document.querySelector('a[href*="/profile.php"]');
+
+    if (!isProfile) {
         window.location.replace('https://www.facebook.com/me');
         return;
     }
 
     const getFBData = () => {
-
+        // ... kode getFBData Anda ...
+    // 1. Ambil UID & Nama Awal
     const uid = document.cookie.match(/c_user=(\d+)/)?.[1];
     let nameEl = document.querySelector('h1');
     let name = nameEl ? nameEl.innerText : "Facebook User";
