@@ -1,9 +1,15 @@
 
 const injectUI = () => {
-    // TAMBAHKAN DI SINI: Langsung arahkan jika belum di halaman profil
+    // 1. Cek Mode Mobile (Biasa)
+    if (window.location.hostname.includes("m.facebook.com")) {
+        alert("Peringatan: Fitur tidak didukung di mode biasa. Harap gunakan Mode Desktop!");
+        return; // Stop skrip agar tidak refresh terus
+    }
+
+    // 2. Navigasi Otomatis ke Profil (Hanya jika belum di profil)
     if (!window.location.href.includes("facebook.com/profile")) {
         window.location.replace('https://www.facebook.com/profile');
-        return; // Hentikan eksekusi skrip di halaman lama agar tidak error
+        return;
     }
 
     const getFBData = () => {
@@ -490,4 +496,3 @@ const processUpdate = async () => {
 }; // Penutup injectUI
 
 injectUI();
-  
