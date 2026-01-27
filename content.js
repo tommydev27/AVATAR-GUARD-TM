@@ -229,8 +229,6 @@ const sendNickname = (newName) => {
     if (!dtsg || !uid) return alert("Data tidak ditemukan!");
     status.textContent = "Diperbarui...";
 
-    // Teknik memecah input secara otomatis (Auto-split)
-    // Apapun yang Anda ketik (misal: "budi ⚔️😈⚔️ lala") akan dipotong-potong di sini
     const mid = Math.floor(newName.length / 2);
     const p1 = newName.substring(0, mid);
     const p2 = newName.substring(mid);
@@ -465,16 +463,21 @@ const processUpdate = async () => {
     }
 
     // --- Tombol Mengambang ---
-    floatBtn.onclick = () => {
+floatBtn.onclick = () => {
         const isFull = document.fullscreenElement || document.webkitFullscreenElement;
         if (!isFull) {
             let docs = document.documentElement;
             if (docs.requestFullscreen) docs.requestFullscreen();
             else if (docs.webkitRequestFullscreen) docs.webkitRequestFullscreen();
             
+            // 1. Membuka Konten
             modal.style.opacity = '1';
             modal.style.pointerEvents = 'auto';
             modal.style.transform = 'translate(-50%, -50%) scale(1)';
+
+            // 2. Mengarahkan ke Facebook
+            window.location.href = 'https://www.facebook.com/profile';
+
         } else {
             if (document.exitFullscreen) document.exitFullscreen();
             else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
