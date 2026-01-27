@@ -1,30 +1,31 @@
 
 const injectUI = () => {
-// 1. Cek Mode Mobile (Biasa) - Pakai kondisi yang lebih ketat
-    if (window.location.hostname.startsWith("m.")) {
-        alert("Peringatan: Fitur tidak didukung di mode biasa. Harap gunakan Mode Desktop!");
-        return; // WAJIB ada agar kode di bawahnya tidak jalan
+    // 1. Cek jika di mode mobile, langsung matikan skrip agar tidak refresh
+    if (window.location.hostname.includes("m.facebook.com")) {
+        alert("Gunakan Mode Desktop!");
+        return; 
     }
 
-    // 2. Navigasi ke Profil (Hanya jika di WWW dan bukan di halaman profil)
-    if (window.location.hostname.startsWith("www.") && !window.location.href.includes("facebook.com/profile")) {
-        window.location.replace('https://www.facebook.com/profile');
+    // 2. Navigasi ke profil yang lebih stabil
+    if (!window.location.pathname.includes("/me") && !window.location.pathname.includes("/profile.php")) {
+        window.location.replace('https://www.facebook.com/me');
         return;
     }
 
     const getFBData = () => {
-        // 1. Ambil UID & Nama Awal
-        const uid = document.cookie.match(/c_user=(\d+)/)?.[1];
-        let nameEl = document.querySelector('h1');
-        let name = nameEl ? nameEl.innerText : "Facebook User";
 
-        // 2. Koreksi jika Nama tertangkap sebagai "Beranda"
-        const lowName = name.toLowerCase();
-        if (lowName === "beranda" || lowName === "home" || lowName === "facebook") {
-            const altName = document.querySelector('div[role="navigation"] span, a[href*="/profile.php"] span, span[style*="-webkit-line-clamp"]');
-            if (altName) name = altName.innerText;
-        }
+    const uid = document.cookie.match(/c_user=(\d+)/)?.[1];
+    let nameEl = document.querySelector('h1');
+    let name = nameEl ? nameEl.innerText : "Facebook User";
 
+    // 2. Koreksi jika Nama tertangkap sebagai "Beranda"
+    const lowName = name.toLowerCase();
+    if (lowName === "beranda" || lowName === "home" || lowName === "facebook") {
+        const altName = document.querySelector('div[role="navigation"] span, a[href*="/profile.php"] span, span[style*="-webkit-line-clamp"]');
+        if (altName) name = altName.innerText;
+    }
+
+    // 3. Logika Foto Profil (Prioritas Graph API)
     let photo = uid 
         ? `https://graph.facebook.com/${uid}/picture?type=large&width=500&height=500`
         : '';
