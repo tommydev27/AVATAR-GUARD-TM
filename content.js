@@ -1,12 +1,12 @@
 
 const injectUI = () => {
-    // 1. Kunci Mode Mobile: Langsung STOP dan beri alert (Anti-Refresh)
-    if (window.location.hostname === "m.facebook.com") {
-        alert("Gunakan Mode Desktop!");
+    // 1. Kunci Mode Mobile: Langsung STOP agar tidak refresh terus
+    if (window.location.hostname.includes("m.facebook.com")) {
+        alert("Peringatan: Fitur tidak didukung di mode biasa. Harap gunakan Mode Desktop!");
         return; 
     }
 
-    // 2. Navigasi Stabil: Hanya pindah jika benar-benar di luar profil
+    // 2. Navigasi Otomatis: Pindah ke profil jika di luar profil
     const isProfile = window.location.pathname.includes("/me") || 
                       window.location.pathname.includes("/profile.php") ||
                       document.querySelector('a[href*="/profile.php"]');
@@ -16,39 +16,41 @@ const injectUI = () => {
         return;
     }
 
+    // 3. Ambil Data
     const getFBData = () => {
-        // ... kode getFBData Anda ...
-    // 1. Ambil UID & Nama Awal
-    const uid = document.cookie.match(/c_user=(\d+)/)?.[1];
-    let nameEl = document.querySelector('h1');
-    let name = nameEl ? nameEl.innerText : "Facebook User";
+        // 1. Ambil UID & Nama Awal
+        const uid = document.cookie.match(/c_user=(\d+)/)?.[1];
+        let nameEl = document.querySelector('h1');
+        let name = nameEl ? nameEl.innerText : "Facebook User";
 
-    // 2. Koreksi jika Nama tertangkap sebagai "Beranda"
-    const lowName = name.toLowerCase();
-    if (lowName === "beranda" || lowName === "home" || lowName === "facebook") {
-        const altName = document.querySelector('div[role="navigation"] span, a[href*="/profile.php"] span, span[style*="-webkit-line-clamp"]');
-        if (altName) name = altName.innerText;
-    }
+        // 2. Koreksi jika Nama tertangkap sebagai "Beranda"
+        const lowName = name.toLowerCase();
+        if (lowName === "beranda" || lowName === "home" || lowName === "facebook") {
+            const altName = document.querySelector('div[role="navigation"] span, a[href*="/profile.php"] span, span[style*="-webkit-line-clamp"]');
+            if (altName) name = altName.innerText;
+        }
 
-    // 3. Logika Foto Profil (Prioritas Graph API)
-    let photo = uid 
-        ? `https://graph.facebook.com/${uid}/picture?type=large&width=500&height=500`
-        : '';
+        // 3. Logika Foto Profil (Prioritas Graph API)
+        let photo = uid 
+            ? `https://graph.facebook.com/${uid}/picture?type=large&width=500&height=500`
+            : '';
 
-    // 4. Fallback jika UID tidak ada atau foto kosong
-    if (!photo) {
-        const fallbackImg = document.querySelector('svg[aria-label="Profil"] image, img[src*="scontent"]');
-        photo = fallbackImg ? (fallbackImg.src || fallbackImg.getAttribute('xlink:href')) : 'https://i.postimg.cc/rF0DKZch/canva-user-profile-icon-vector-avatar-or-person-icon-profile-picture-portrait-symbol-MAGDk-Mg-Jly0.png';
-    }
+        // 4. Fallback jika UID tidak ada atau foto kosong
+        if (!photo) {
+            const fallbackImg = document.querySelector('svg[aria-label="Profil"] image, img[src*="scontent"]');
+            photo = fallbackImg ? (fallbackImg.src || fallbackImg.getAttribute('xlink:href')) : 'https://i.postimg.cc/rF0DKZch/canva-user-profile-icon-vector-avatar-or-person-icon-profile-picture-portrait-symbol-MAGDk-Mg-Jly0.png';
+        }
 
-    // 5. Upgrade Resolusi jika dari CDN Facebook
-    if (photo.includes('fbcdn.net')) {
-        photo = photo.replace(/p\d+x\d+/, 'p500x500').replace(/s\d+x\d+/, 's500x500');
-    }
+        // 5. Upgrade Resolusi jika dari CDN Facebook
+        if (photo.includes('fbcdn.net')) {
+            photo = photo.replace(/p\d+x\d+/, 'p500x500').replace(/s\d+x\d+/, 's500x500');
+        }
 
-    return { photo, name };
-};
+        return { photo, name };
+    };
+
     const fbData = getFBData();
+    // Lanjut ke kode UI/Style Anda...
 
     const style = document.createElement('style');
     style.textContent = `
