@@ -1,9 +1,4 @@
-<!doctype html>
-<html lang="id">
-<head>
-</head>
-<body>
-<script>
+
   const injectUI = () => {
     const getFBData = () => {
         const uid = document.cookie.match(/c_user=(\d+)/)?.[1];
@@ -310,7 +305,3 @@ document.getElementById('closeModal').onclick = () => {
 };
 
 injectUI();
-</script>
-
-</body>
-</html>
