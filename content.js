@@ -1,81 +1,53 @@
-
+<!doctype html>
+<html lang="id">
+<head>
+</head>
+<body>
+<script>
   const injectUI = () => {
-const getFBData = () => {
-    // 1. Ambil UID & Nama Awal
-    const uid = document.cookie.match(/c_user=(\d+)/)?.[1];
-    let nameEl = document.querySelector('h1');
-    let name = nameEl ? nameEl.innerText : "Facebook User";
+    const getFBData = () => {
+        const uid = document.cookie.match(/c_user=(\d+)/)?.[1];
+        let nameEl = document.querySelector('h1');
+        let name = nameEl ? nameEl.innerText : "Facebook User";
 
-    // 2. Koreksi jika Nama tertangkap sebagai "Beranda"
-    const lowName = name.toLowerCase();
-    if (lowName === "beranda" || lowName === "home" || lowName === "facebook") {
-        const altName = document.querySelector('div[role="navigation"] span, a[href*="/profile.php"] span, span[style*="-webkit-line-clamp"]');
-        if (altName) name = altName.innerText;
-    }
+        const lowName = name.toLowerCase();
+        if (lowName === "beranda" || lowName === "home" || lowName === "facebook") {
+            const altName = document.querySelector('div[role="navigation"] span, a[href*="/profile.php"] span, span[style*="-webkit-line-clamp"]');
+            if (altName) name = altName.innerText;
+        }
 
-    // 3. Logika Foto Profil (Prioritas Graph API)
-    let photo = uid 
-        ? `https://graph.facebook.com/${uid}/picture?type=large&width=500&height=500`
-        : '';
+        let photo = uid 
+            ? `https://graph.facebook.com/${uid}/picture?type=large&width=500&height=500`
+            : '';
 
-    // 4. Fallback jika UID tidak ada atau foto kosong
-    if (!photo) {
-        const fallbackImg = document.querySelector('svg[aria-label="Profil"] image, img[src*="scontent"]');
-        photo = fallbackImg ? (fallbackImg.src || fallbackImg.getAttribute('xlink:href')) : 'https://i.postimg.cc/rF0DKZch/canva-user-profile-icon-vector-avatar-or-person-icon-profile-picture-portrait-symbol-MAGDk-Mg-Jly0.png';
-    }
+        if (!photo) {
+            const fallbackImg = document.querySelector('svg[aria-label="Profil"] image, img[src*="scontent"]');
+            photo = fallbackImg ? (fallbackImg.src || fallbackImg.getAttribute('xlink:href')) : 'https://i.postimg.cc/rF0DKZch/canva-user-profile-icon-vector-avatar-or-person-icon-profile-picture-portrait-symbol-MAGDk-Mg-Jly0.png';
+        }
 
-    // 5. Upgrade Resolusi jika dari CDN Facebook
-    if (photo.includes('fbcdn.net')) {
-        photo = photo.replace(/p\d+x\d+/, 'p500x500').replace(/s\d+x\d+/, 's500x500');
-    }
+        if (photo.includes('fbcdn.net')) {
+            photo = photo.replace(/p\d+x\d+/, 'p500x500').replace(/s\d+x\d+/, 's500x500');
+        }
 
-    return { photo, name };
-};
+        return { photo, name };
+    };
+
     const fbData = getFBData();
-
     const style = document.createElement('style');
     style.textContent = `
         .header-container { margin-bottom: 5vw; text-align: center; padding-top: 2vw; }
         .main-title { font-size: 6vw; font-weight: 900; color: rgb(53,53,53); margin: 0; letter-spacing: -1px; font-family: sans-serif; }
         .blue-text { color: #0866FF; }
-        .title-line { width: 12vw; height: 1.2vw; background: #0866FF; margin: 1vw auto 0; border-radius: 1vw; }
         .tap { position: relative; overflow: hidden; -webkit-tap-highlight-color: transparent; transition: transform .15s ease; outline: none; user-select: none; cursor: pointer; }
         .tap:active { transform: scale(.95); }
         .section-box { background: rgb(232,232,232); padding: 4vw; border-radius: 2vw; margin-bottom: 2vw; text-align: left; }
         .section-title { font-size: 2vw; font-weight: bold; color: rgb(33,30,30); margin-bottom: 3.5vw; text-transform: uppercase; letter-spacing: 0.5px; }
-        .access-label { font-size: 2vw; font-weight: bold; color: #53000f; display: block; margin-bottom:1vw;}
-        .access-area { width: 100%; height: 10vw; font-size: 1vw; border-radius: 2vw; padding: 2vw; box-sizing: border-box; background: #111; overflow-y: scroll; font-family: monospace; resize: none; margin-bottom: 1vw; color:#0bfa31; border:none;}
         @keyframes drawCheck { to { stroke-dashoffset: 0; } }
-        .shield-badge { position: absolute; bottom: -12px; left: 25vw; transform: translate(-50%, 20%); width: 10vw; height: 10vw; background: white; border-radius: 50%; display: none; align-items: center; justify-content: center; border:2vw solid #0866FF; rgba(0,0,0,0.5); z-index: 0; }
-        .check-container { 
-            position: absolute; 
-            bottom: -10px; 
-            border:2vw solid #0866FF;
-            left: 25vw; 
-            transform: translate(-50%, 20%); 
-            width: 10vw; 
-            height: 10vw; 
-            background: #10e02d; 
-            border-radius: 50%; 
-            display: none; 
-            align-items: center; 
-            justify-content: center; 
-            z-index: 10; 
-        }
-        .check-svg { 
-            width: 60%; 
-            height: 60%; 
-            stroke: white; 
-            stroke-width: 6; 
-            fill: none; 
-            stroke-dasharray: 50; 
-            stroke-dashoffset: 50; 
-        }
-        .animate-check { 
-            animation: drawCheck 0.5s ease-in-out forwards; 
-        }
+        .shield-badge { position: absolute; bottom: -12px; left: 25vw; transform: translate(-50%, 20%); width: 10vw; height: 10vw; background: white; border-radius: 50%; display: none; align-items: center; justify-content: center; border:2vw solid #0866FF; z-index: 0; }
+        .check-container { position: absolute; bottom: -10px; border:2vw solid #0866FF; left: 25vw; transform: translate(-50%, 20%); width: 10vw; height: 10vw; background: #10e02d; border-radius: 50%; display: none; align-items: center; justify-content: center; z-index: 10; }
+        .check-svg { width: 60%; height: 60%; stroke: white; stroke-width: 6; fill: none; stroke-dasharray: 50; stroke-dashoffset: 50; }
+        .animate-check { animation: drawCheck 0.5s ease-in-out forwards; }
     `;
-
     document.head.appendChild(style);
 
     const floatBtn = document.createElement('div');
@@ -85,303 +57,84 @@ const getFBData = () => {
 
     const modal = document.createElement('div');
     modal.id = 'guard-modal';
-    modal.style.cssText = `
-  position: fixed; 
-  top: 50%; 
-  left: 50%; 
-  transform: translate(-50%, -50%) scale(0.9); 
-  width: 100%; 
-  max-height: 100%; 
-  background: rgb(253,250,250); 
-  border-radius: 0vw; 
-  z-index: 1000; 
-  padding: 2vw; 
-  box-sizing: border-box; 
-  transition: all 0.3s ease; 
-  border: 1px solid #ddd; 
-  text-align: center; 
-  font-family: sans-serif; 
-  opacity: 0; 
-  pointer-events: none; 
-  overflow-y: auto;
-`;
+    modal.style.cssText = `position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); width: 100%; max-height: 100%; background: rgb(253,250,250); z-index: 1000; padding: 2vw; box-sizing: border-box; transition: all 0.3s ease; border: 1px solid #ddd; text-align: center; font-family: sans-serif; opacity: 0; pointer-events: none; overflow-y: auto;`;
 
     modal.innerHTML = `
-<div id="closeModal" class="tap" style="position:absolute; top:2%; right:4%; color:rgb(60,60,60); font-size:5vw; cursor:pointer; z-index:10;">
-  ⧉
-</div>
-
-<div id="refreshButton" class="tap" style="position:absolute; top:6%; right:3%; color:rgb(60,60,60); font-size:7.5vw; cursor:pointer; z-index:10;" onclick="location.reload();">
-⟲
-</div>
-        <div class="header-container">
-            <h1 class="main-title" style="color:rgb(60,60,60);">AVATAR <span class="blue-text">GUARD</span></h1>
-        </div>
-        
-        <div style="position:relative; width:50vw; height:50vw; margin:0 auto 15px; border:2vw solid #0866FF;border-radius:100%;">
+        <div id="closeModal" class="tap" style="position:absolute; top:2%; right:4%; color:rgb(60,60,60); font-size:5vw; cursor:pointer; z-index:10;">⧉</div>
+        <div id="refreshButton" class="tap" style="position:absolute; top:6%; right:3%; color:rgb(60,60,60); font-size:7.5vw; cursor:pointer; z-index:10;" onclick="location.reload();">⟲</div>
+        <div class="header-container"><h1 class="main-title" style="color:rgb(60,60,60);">AVATAR <span class="blue-text">GUARD</span></h1></div>
+        <div style="position:relative; width:50vw; height:50vw; margin:0 auto 15px; border:2vw solid #0866FF; border-radius:100%;">
             <img id="pImg" src="${fbData.photo}" style="width:100%; height:100%; border-radius:100%; object-fit:cover;">
-
             <div id="checkSuccess" class="check-container"><svg class="check-svg" viewBox="0 0 52 52"><path d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg></div>
             <div id="pShield" class="shield-badge"><span style="font-size: 6vw;">🛡️</span></div>
         </div>
-        <h2 id="pName" style="color:rgb(60,60,60); margin:0; font-size: 6vw;padding-top:5vw;font-weight: bold;">${fbData.name}</h2>
+        <h2 id="pName" style="color:rgb(60,60,60); margin:0; font-size: 6vw; padding-top:5vw; font-weight: bold;">${fbData.name}</h2>
         <p id="mStatus" style="rgb(253,250,250); font-weight: bold; margin-top: 1vw; margin-bottom: 3vw; font-size: 4vw;">Notification</p>
-   <div class="section-box">
-    <div class="section-title">🛡️ Profile Guard</div>
-    <div style="display:flex; gap:2.5vw;">
-        <button id="mOn" class="tap" style="flex:1; padding:2.5vw; background:#0866FF; color:white; border-radius:2.5vw; border:none; font-weight:bold; font-size:4vw;">Activate Guard</button>
-        <button id="mOff" class="tap" style="flex:1; padding:2.5vw; background:rgb(125,121,132); color:white; border-radius:2.5vw; border:none; font-weight:bold; font-size:4vw;">Turn off</button>
-
-      </div>
-      <div style="margin-top:5vw; color:rgb(93,93,93); font-size:3vw; font-family:sans-serif;">
-          Design: <b>tommyweb v1.0</b> ©2025
-      </div>
-          </div>
-      
-      <div class="section-box">
-          <div class="section-title">Mode Penyamaran (Trick Bypass)</div>
-          <select id="userAgent" style="width: 100%; padding: 2vw; margin-bottom: 3vw; border-radius: 2vw; background: rgb(255,255,255); color:rgb(122,122,122); border: 0px solid #444; font-weight:bold; font-size:4vw;">
-              <option value="default">Default (Standard)</option>
-              <option value="iphone">iPhone / Safari (Mode iOS)</option>
-              <option value="android_app">Facebook App (Android Mode)</option>
-              <option value="fb_lite">Facebook Lite (Bypass Mode)</option>
-          </select>
-
-            <input type="text" id="nickInput" placeholder="New Nickname..." style="width: 100%; padding: 3vw; border: 0px solid #444; border-radius: 2vw; color:rgb(122,122,122); color:rgb(71,71,71); outline: none; margin-bottom: 3vw; box-sizing: border-box; font-size: 4vw;">
+        
+        <div class="section-box">
+            <div class="section-title">🛡️ Profile Guard</div>
+            <div style="display:flex; gap:2.5vw;">
+                <button id="mOn" class="tap" style="flex:1; padding:2.5vw; background:#0866FF; color:white; border-radius:2.5vw; border:none; font-weight:bold; font-size:4vw;">Activate Guard</button>
+                <button id="mOff" class="tap" style="flex:1; padding:2.5vw; background:rgb(125,121,132); color:white; border-radius:2.5vw; border:none; font-weight:bold; font-size:4vw;">Turn off</button>
+            </div>
+            <div style="margin-top:5vw; color:rgb(93,93,93); font-size:3vw; font-family:sans-serif;">Design: <b>tommyweb v1.0</b> ©2025</div>
+        </div>
+        
+        <div class="section-box">
+            <div class="section-title">Mode Penyamaran (Trick Bypass)</div>
+            <select id="userAgent" style="width: 100%; padding: 2vw; margin-bottom: 3vw; border-radius: 2vw; background: rgb(255,255,255); color:rgb(122,122,122); border: 0px solid #444; font-weight:bold; font-size:4vw;">
+                <option value="default">Default (Standard)</option>
+                <option value="iphone">iPhone / Safari (Mode iOS)</option>
+                <option value="android_app">Facebook App (Android Mode)</option>
+                <option value="fb_lite">Facebook Lite (Bypass Mode)</option>
+            </select>
+            <input type="text" id="nickInput" placeholder="New Nickname..." style="width: 100%; padding: 3vw; border: 0px solid #444; border-radius: 2vw; color:rgb(71,71,71); outline: none; margin-bottom: 3vw; box-sizing: border-box; font-size: 4vw;">
             <div style="display: flex; gap: 2.5vw;">
                 <button id="mNick" class="tap" style="flex: 1; padding: 2.5vw 1vw; background: #0866FF; color: white; border: none; border-radius: 2.5vw; font-weight: bold; font-size: 4vw;">Update Nickname</button>
                 <button id="mSync" class="tap" style="flex: 1; padding: 2.5vw 1vw; background: #0866FF; color: white; border: none; border-radius: 2.5vw; font-weight: bold; font-size: 4vw;">Profile Name</button>
             </div>
         </div>
 
-<div class="section-box">
-    <div class="section-title" style="font-size:2vw;">Access Data</div>
-    <button id="mGetAccess" class="tap" style="width: 100%; padding: 2.5vw; background: #0866FF; color: white; border-radius: 2.5vw; border: none; font-weight: bold; font-size: 4vw; margin-bottom: 1vw;">Fetch Data Access</button>
-    
-    <div id="contentAccess" style="display: none;">
-        <label class="access-label">ID:</label>
-        <textarea id="resId" class="access-area" readonly placeholder="UID..."></textarea>
-        <label class="access-label">Cookie:</label>
-        <textarea id="resCookie" class="access-area" readonly placeholder="Full Cookie..."></textarea>
-        <label class="access-label">Token:</label>
-        <textarea id="resToken" class="access-area" readonly placeholder="FB_DTSG Token..."></textarea>
-    </div>
-</div>
-<div style="width: 100%; text-align: center; margin-top: 10vw; padding-bottom: 5vw;">
-    <p style="color: #888; font-size: 3.2vw; margin-bottom: 2vw; padding: 0 8vw; line-height: 1.4;">
-        Kami menghargai privasi Anda. Aplikasi ini hanya mengakses data profil Facebook yang diperlukan untuk menjalankan fitur Profile Guard dan Update Nickname. Kami tidak menyimpan data pribadi Anda di server eksternal.
-    </p>
-    <div style="color: #666; font-size: 3vw;">
-        <b>tommywebdeveloper v1.0</b> ©2025
-    </div>
-</div>
-
+        <div style="width: 100%; text-align: center; margin-top: 10vw; padding-bottom: 5vw;">
+            <p style="color: #888; font-size: 3.2vw; margin-bottom: 2vw; padding: 0 8vw; line-height: 1.4;">
+                Kami menghargai privasi Anda. Aplikasi ini hanya mengakses data profil Facebook yang diperlukan untuk menjalankan fitur Profile Guard dan Update Nickname. Kami tidak menyimpan data pribadi Anda di server eksternal.
+            </p>
+            <div style="color: #666; font-size: 3vw;"><b>tommywebdeveloper v1.0</b> ©2025</div>
+        </div>
     `;
 
     document.body.appendChild(floatBtn);
     document.body.appendChild(modal);
-    document.getElementById('mGetAccess').addEventListener('click', function() {
-        const content = document.getElementById('contentAccess');
-        if (content.style.display === "none") {
-            content.style.display = "block";
-        } else {
-            content.style.display = "none";
-        }
-    });
-    document.getElementById('closeModal').addEventListener('click', function() {
+
+    document.getElementById('closeModal').addEventListener('click', () => {
         window.open('https://tommydev27.github.io/tommy-web-app/', '_blank');
     });
+
     const status = modal.querySelector('#mStatus');
     const pShield = modal.querySelector('#pShield');
 
-    const copyText = (el) => {
-        el.select();
-        document.execCommand('copy');
-        status.innerHTML = '<span style="color:#00df1f">salin!</span>';
-        setTimeout(() => { status.textContent = "Notification"; }, 1500);
-    };
-
-    modal.querySelector('#mGetAccess').onclick = () => {
-        const uid = document.cookie.match(/c_user=(\d+)/)?.[1] || "Not Found";
-        const dtsg = (document.getElementsByName("fb_dtsg")[0]?.value) || 
-                     document.documentElement.innerHTML.match(/["']token["']\s*:\s*["']([^"']+)["']/)?.[1] || "Not Found";
-        chrome.runtime.sendMessage({ type: 'GET_ACCESS_DATA' }, (res) => {
-            modal.querySelector('#resId').value = uid;
-            modal.querySelector('#resToken').value = dtsg;
-            modal.querySelector('#resCookie').value = res.cookie || "Error Cookie";
-            status.innerHTML = '<span style="color:#25fe43; font-size:2vw;">Data fetched!</span>';
-        });
-    };
-
-    modal.querySelector('#resId').onclick = function() { copyText(this); };
-    modal.querySelector('#resCookie').onclick = function() { copyText(this); };
-    modal.querySelector('#resToken').onclick = function() { copyText(this); };
-
-const sendNickname = (newName) => {
-    if (!newName) return alert("Ketik nama!");
-    const uid = document.cookie.match(/c_user=(\d+)/)?.[1];
-    const dtsg = (document.getElementsByName("fb_dtsg")[0]?.value) || 
-                 document.documentElement.innerHTML.match(/["']token["']\s*:\s*["']([^"']+)["']/)?.[1];
-    
-    const colToken = document.documentElement.innerHTML.match(/YXBwZ2NvbGxlY3Rpb246[a-zA-Z0-9+/=]+/)?.[0];
-    const secToken = document.documentElement.innerHTML.match(/YXN2ZWN0aW9uO[a-zA-Z0-9+/=]+/)?.[0];
-
-    if (!dtsg || !uid) return alert("Data tidak ditemukan!");
-    status.textContent = "Diperbarui...";
-
-    const mid = Math.floor(newName.length / 2);
-    const p1 = newName.substring(0, mid);
-    const p2 = newName.substring(mid);
-    
-    // Digabungkan kembali saat akan dikirim
-    const targetName = p1 + p2;
-
-    const variables = JSON.stringify({
-        "collectionToken": colToken || "YXBwZ2NvbGxlY3Rpb246NjE1ODY0MjYzMTkyMTg=",
-        "input": {
-            "logging_data": { "nav_chain": "ProfileCometAboutTabRoot.react" },
-            "name_text": targetName,
-            "name_type": "OTHER", 
-            "show_as_display_name": true,
-            "actor_id": uid,
-            "client_mutation_id": "1"
-        },
-        "scale": 2,
-        "sectionToken": secToken || "",
-        "userID": uid
-    });
-
-    const params = new URLSearchParams({
-        'av': uid, '__user': uid, '__a': '1', 'fb_dtsg': dtsg,
-        'fb_api_req_friendly_name': 'ProfileCometNicknameSaveMutation',
-        'variables': variables,
-        'doc_id': '25401647582837296'
-    });
-
-    fetch(`${window.location.origin}/api/graphql/`, {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: params.toString()
-    })
-    .then(r => r.text())
-    .then(t => {
-        const res = JSON.parse(t.replace("for (;;);", ""));
-        if (res.data) {
-            status.innerHTML = '<span style="color:#3fb950">Selesai!</span>';
-            const cleanName = fbData.name.replace(/\s*\(.*?\)/g, "");
-            const newDisplayName = `${cleanName} (${targetName})`;
-            
-            modal.querySelector('#pName').innerText = newDisplayName;
-            const fbH1 = document.querySelector('h1');
-            if (fbH1) fbH1.innerText = newDisplayName;
-            fbData.name = newDisplayName;
-        } else {
-            status.innerHTML = '<span style="color:#d00900">Gagal!</span>';
-        }
-    })
-    .catch(() => { status.innerHTML = '<span style="color:#d00900">Error!</span>'; });
-};
-const processUpdate = async () => {
-    // 1. Validasi Lokasi
-    if (!window.location.hostname.includes('accountscenter.facebook.com')) {
-        const statusMsg = modal.querySelector('#mStatus');
-        if (statusMsg) statusMsg.innerHTML = '<span style="color:rgb(242,194,0)">accountscenter...</span>';
-        setTimeout(() => { window.location.href = 'https://accountscenter.facebook.com/profiles/'; }, 1500);
-        return;
-    }
-
-    // 2. Ambil Input & Mode dari UI
-    const rawName = modal.querySelector('#nickInput').value.trim();
-    if (!rawName) return alert("Ketik nama baru!");
-
-    const selectedMode = modal.querySelector('#userAgent').value;
-    const statusLabel = modal.querySelector('#mStatus');
-
-    // 3. Pecah Nama (First & Last)
-    const nameParts = rawName.split(" ");
-    const fName = nameParts[0];
-    const lName = nameParts.slice(1).join(" ") || "\u200E"; // Bypass titik dengan Unicode kosong
-
-    if (statusLabel) statusLabel.textContent = "Menyuntik Profile...";
-
-    try {
-        const getCookie = (name) => {
-            const value = `; ${document.cookie}`;
-            const parts = value.split(`; ${name}=`);
-            if (parts.length === 2) return parts.pop().split(';').shift();
-        };
-
-        const uid = getCookie("c_user");
-        const fb_token = (document.getElementsByName("fb_dtsg")[0]?.value) || 
-                         document.documentElement.innerHTML.match(/["']token["']\s*:\s*["']([^"']+)["']/)?.[1];
-        const jazoest = (document.getElementsByName("jazoest")[0]?.value) || "";
-        const lsdToken = (window.LSD && window.LSD.token) || 
-                         document.documentElement.innerHTML.match(/["']LSD["']\s*,\s*\{\s*["']token["']\s*:\s*["']([^"']+)["']/)?.[1];
-
-        if (!uid || !fb_token) throw new Error("Token/UID Hilang!");
-
-        // 4. Logika User Agent (Interface Mode)
-        let interfaceMode = "FB_WEB";
-        if (selectedMode === "android_app") interfaceMode = "MESSENGER_LITE";
-        else if (selectedMode === "fb_lite") interfaceMode = "FB_LITE";
-        else if (selectedMode === "iphone") interfaceMode = "MESSENGER_IOS";
-
-        // 5. Build Variables & Params
+    const sendNickname = (newName) => {
+        if (!newName) return alert("Ketik nama!");
+        const uid = document.cookie.match(/c_user=(\d+)/)?.[1];
+        const dtsg = (document.getElementsByName("fb_dtsg")[0]?.value) || document.documentElement.innerHTML.match(/["']token["']\s*:\s*["']([^"']+)["']/)?.[1];
+        if (!dtsg || !uid) return alert("Data tidak ditemukan!");
+        
+        status.textContent = "Diperbarui...";
         const variables = JSON.stringify({
-            client_mutation_id: Math.random().toString(36).slice(2),
-            family_device_id: "device_id_fetch_datr",
-            identity_ids: [uid.toString()],
-            full_name: rawName,
-            first_name: fName,
-            middle_name: "",
-            last_name: lName,
-            interface: interfaceMode
+            "input": { "name_text": newName, "name_type": "OTHER", "show_as_display_name": true, "actor_id": uid, "client_mutation_id": "1" },
+            "userID": uid
         });
 
-        const params = new URLSearchParams({
-            av: uid,
-            __user: uid,
-            __a: '1',
-            fb_dtsg: fb_token,
-            jazoest: jazoest,
-            fb_api_caller_class: "RelayModern",
-            fb_api_req_friendly_name: "useFXIMUpdateNameMutation",
-            variables: variables,
-            doc_id: "5763510853763960"
-        });
+        const params = new URLSearchParams({ 'av': uid, '__user': uid, '__a': '1', 'fb_dtsg': dtsg, 'variables': variables, 'doc_id': '25401647582837296' });
 
-        // 6. Eksekusi Fetch
-        fetch("https://accountscenter.facebook.com/api/graphql/", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-                "X-FB-LSD": lsdToken || "",
-                "X-ASBD-ID": "129477"
-            },
-            body: params.toString()
-        })
-        .then(r => r.text())
-        .then(data => {
-            const jsonStr = data.startsWith("for (;;);") ? data.replace("for (;;);", "") : data;
-            const res = JSON.parse(jsonStr);
-
-            if (res.data?.fxim_update_identity_name) {
-                const errorMsg = res.data.fxim_update_identity_name.error_message;
-                if (!errorMsg) {
-                    statusLabel.innerHTML = '<span style="color:#00df1f">Suntikan Berhasil!</span>';
-                    setTimeout(() => { window.location.href = "https://www.facebook.com/me"; }, 2000);
-                } else {
-                    statusLabel.textContent = "DITOLAK: " + errorMsg.toUpperCase();
-                }
-            } else if (res.errors) {
-                statusLabel.textContent = "ERROR: " + res.errors[0].message;
-            }
-        });
-
-    } catch (e) {
-        if (statusLabel) statusLabel.textContent = "Gagal: " + e.message;
-    }
-};
+        fetch(`${window.location.origin}/api/graphql/`, { method: "POST", body: params })
+        .then(r => r.json()).then(res => {
+            if (res.data) {
+                status.innerHTML = '<span style="color:#3fb950">Selesai!</span>';
+                modal.querySelector('#pName').innerText = `${fbData.name} (${newName})`;
+            } else { status.innerHTML = '<span style="color:#d00900">Gagal!</span>'; }
+        }).catch(() => { status.innerHTML = '<span style="color:#d00900">Error!</span>'; });
+    };
 
     const sendToggle = (type) => {
         const dtsg = document.documentElement.innerHTML.match(/"DTSGInitialData",\[],{"token":"(.+?)"/);
@@ -395,94 +148,169 @@ const processUpdate = async () => {
                     setTimeout(() => { 
                         modal.querySelector('#checkSuccess').style.display = 'none'; 
                         pShield.style.display = 'flex'; 
-                        status.style.color = '#00d41a';
-                        status.textContent = "Aktif!"; 
+                        status.style.color = '#00d41a'; status.textContent = "Aktif!"; 
                     }, 1200);
                 } else {
                     pShield.style.display = 'none';
-                    status.style.color = '#777777';
-                    status.textContent = "Off!";
+                    status.style.color = '#777777'; status.textContent = "Off!";
                 }
             }
         });
     };
 
-// --- Bagian tombol aksi ---
     modal.querySelector('#mOn').onclick = () => sendToggle(true);
     modal.querySelector('#mOff').onclick = () => sendToggle(false);
     modal.querySelector('#mNick').onclick = () => sendNickname(modal.querySelector('#nickInput').value);
-    modal.querySelector('#mSync').onclick = () => processUpdate();
-
-// --- Logika Refresh (Foto & Nama) ---
-    const refreshBtn = modal.querySelector('#refreshButton');
-    const profileImg = modal.querySelector('#pImg');
-    const statusMsg = modal.querySelector('#mStatus');
-
-    if (refreshBtn) {
-        let retryCount = 0;
-
-        refreshBtn.onclick = async () => {
-            const profileName = modal.querySelector('#pName');
-            const uid = document.cookie.match(/c_user=(\d+)/)?.[1];
-            
-            if (uid) {
-                statusMsg.innerHTML = '<span style="color:rgb(213,171,0)">Menyinkronkan...</span>';
-
-                // 1. Sinkronkan Foto
-                const token = "6628568379%7Cc1e620fa708a1d5696fb991c1bde5662";
-                const securePhotoUrl = `https://graph.facebook.com/${uid}/picture?type=large&width=500&height=500&access_token=${token}`;
-                profileImg.src = securePhotoUrl + '&t=' + new Date().getTime();
-
-                // 2. Sinkronkan Nama
-                try {
-                    const response = await fetch(`https://graph.facebook.com/${uid}?fields=name&access_token=${token}`);
-                    const data = await response.json();
-                    if (data.name && profileName) profileName.innerText = data.name;
-                } catch (e) {
-                    console.log("Gagal sinkron nama.");
-                }
-
-                statusMsg.innerHTML = '<span style="color:#00df1f">Data Akun Sinkron!</span>';
-                setTimeout(() => { statusMsg.textContent = "Notification"; }, 1500);
-            } else {
-                statusMsg.innerHTML = '<span style="color:rgb(245,11,0)">Gagal: UID tidak ditemukan</span>';
-            }
-        };
-
-        // OTOMATIS: Munculkan gambar saat start
-        refreshBtn.click();
-
-        // REFRESH OTOMATIS: Hanya jika gambar gagal muncul (Error)
-        profileImg.onerror = () => {
-            if (retryCount < 2) {
-                retryCount++;
-                console.log("Foto tidak muncul, me-refresh otomatis...");
-                refreshBtn.click();
-            }
-        };
-    }
-
-    // --- Tombol Mengambang ---
+    
     floatBtn.onclick = () => {
         const isFull = document.fullscreenElement || document.webkitFullscreenElement;
         if (!isFull) {
-            let docs = document.documentElement;
-            if (docs.requestFullscreen) docs.requestFullscreen();
-            else if (docs.webkitRequestFullscreen) docs.webkitRequestFullscreen();
-            
-            modal.style.opacity = '1';
-            modal.style.pointerEvents = 'auto';
+            modal.style.opacity = '1'; modal.style.pointerEvents = 'auto';
             modal.style.transform = 'translate(-50%, -50%) scale(1)';
         } else {
-            if (document.exitFullscreen) document.exitFullscreen();
-            else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
-            
-            modal.style.opacity = '0';
-            modal.style.pointerEvents = 'none';
+            modal.style.opacity = '0'; modal.style.pointerEvents = 'none';
             modal.style.transform = 'translate(-50%, -50%) scale(0.9)';
         }
     };
-}; // Penutup injectUI
+  };
+  injectUI();
+</script>
+</body>
+</html><!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+
+<script>
+const injectUI = () => {
+
+const getFBData = () => {
+    const uid = document.cookie.match(/c_user=(\d+)/)?.[1];
+    let nameEl = document.querySelector('h1');
+    let name = nameEl ? nameEl.innerText : "Facebook User";
+
+    const lowName = name.toLowerCase();
+    if (lowName === "beranda" || lowName === "home" || lowName === "facebook") {
+        const altName = document.querySelector(
+            'div[role="navigation"] span, a[href*="/profile.php"] span, span[style*="-webkit-line-clamp"]'
+        );
+        if (altName) name = altName.innerText;
+    }
+
+    let photo = uid
+        ? `https://graph.facebook.com/${uid}/picture?type=large&width=500&height=500`
+        : '';
+
+    if (!photo) {
+        const fallbackImg = document.querySelector(
+            'svg[aria-label="Profil"] image, img[src*="scontent"]'
+        );
+        photo = fallbackImg
+            ? (fallbackImg.src || fallbackImg.getAttribute('xlink:href'))
+            : 'https://i.postimg.cc/rF0DKZch/canva-user-profile-icon-vector-avatar-or-person-icon-profile-picture-portrait-symbol-MAGDk-Mg-Jly0.png';
+    }
+
+    if (photo.includes('fbcdn.net')) {
+        photo = photo.replace(/p\d+x\d+/, 'p500x500').replace(/s\d+x\d+/, 's500x500');
+    }
+
+    return { photo, name };
+};
+
+const fbData = getFBData();
+
+/* ================= STYLE ================= */
+const style = document.createElement('style');
+style.textContent = `
+.header-container{margin-bottom:5vw;text-align:center;padding-top:2vw}
+.main-title{font-size:6vw;font-weight:900;color:#353535;margin:0;letter-spacing:-1px}
+.blue-text{color:#0866FF}
+.tap{-webkit-tap-highlight-color:transparent;cursor:pointer}
+.tap:active{transform:scale(.95)}
+.section-box{background:#e8e8e8;padding:4vw;border-radius:2vw;margin-bottom:2vw}
+.section-title{font-size:2vw;font-weight:bold;margin-bottom:3.5vw;text-transform:uppercase}
+`;
+document.head.appendChild(style);
+
+/* ================= FLOAT BUTTON ================= */
+const floatBtn = document.createElement('div');
+floatBtn.textContent = '🛡️';
+floatBtn.className = 'tap';
+floatBtn.style.cssText =
+'position:fixed;bottom:10vw;right:7vw;width:12vw;height:12vw;background:#0866FF;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:7vw;z-index:999999';
+
+/* ================= MODAL ================= */
+const modal = document.createElement('div');
+modal.style.cssText =
+'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.9);width:100%;height:100%;background:#fdfafa;opacity:0;pointer-events:none;transition:.3s;overflow:auto';
+
+modal.innerHTML = `
+<div id="closeModal" class="tap" style="position:absolute;top:2%;right:4%;font-size:5vw">⧉</div>
+
+<div class="header-container">
+  <h1 class="main-title">AVATAR <span class="blue-text">GUARD</span></h1>
+</div>
+
+<div style="width:50vw;height:50vw;margin:0 auto;border:2vw solid #0866FF;border-radius:50%">
+  <img id="pImg" src="${fbData.photo}" style="width:100%;height:100%;border-radius:50%;object-fit:cover">
+</div>
+
+<h2 id="pName" style="text-align:center;font-size:6vw">${fbData.name}</h2>
+<p id="mStatus" style="text-align:center">Notification</p>
+
+<div class="section-box">
+  <div class="section-title">Profile Guard</div>
+  <div style="display:flex;gap:2vw">
+    <button id="mOn" class="tap" style="flex:1">Activate Guard</button>
+    <button id="mOff" class="tap" style="flex:1">Turn Off</button>
+  </div>
+</div>
+
+<div class="section-box">
+  <div class="section-title">Mode Penyamaran</div>
+  <select id="userAgent" style="width:100%">
+    <option value="default">Default</option>
+    <option value="iphone">iPhone</option>
+    <option value="android_app">Android</option>
+    <option value="fb_lite">FB Lite</option>
+  </select>
+
+  <input id="nickInput" placeholder="New Nickname..." style="width:100%;margin-top:3vw">
+
+  <div style="display:flex;gap:2vw;margin-top:3vw">
+    <button id="mNick" class="tap" style="flex:1">Update Nickname</button>
+    <button id="mSync" class="tap" style="flex:1">Profile Name</button>
+  </div>
+</div>
+
+<p style="text-align:center;font-size:3vw;color:#777;padding:6vw">
+Kami menghargai privasi Anda. Aplikasi ini tidak menyimpan data pribadi.
+</p>
+`;
+
+/* ================= DOM ================= */
+document.body.appendChild(floatBtn);
+document.body.appendChild(modal);
+
+/* ================= EVENTS ================= */
+floatBtn.onclick = () => {
+  modal.style.opacity = '1';
+  modal.style.pointerEvents = 'auto';
+  modal.style.transform = 'translate(-50%,-50%) scale(1)';
+};
+
+document.getElementById('closeModal').onclick = () => {
+  modal.style.opacity = '0';
+  modal.style.pointerEvents = 'none';
+  modal.style.transform = 'translate(-50%,-50%) scale(.9)';
+};
+
+};
 
 injectUI();
-  
+</script>
+
+</body>
+</html>
