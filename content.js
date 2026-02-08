@@ -1,5 +1,4 @@
 
-    
   const injectUI = () => {
 const getFBData = () => {
     // 1. Ambil UID & Nama Awal
@@ -172,26 +171,36 @@ const getFBData = () => {
     document.getElementById('closeModal').addEventListener('click', function() {
         window.open('https://tommydev27.github.io/tommy-web-app/', '_blank');
     });
-// ... (Bagian awal kode tetap sama sampai ke variabel pShield)
-
-    const status = modal.querySelector('#mStatus');
+const status = modal.querySelector('#mStatus');
     const pShield = modal.querySelector('#pShield');
 
-    // LOGIKA OTOMATIS: Cek apakah Guard sudah aktif di profil asli saat ini
+    // LOGIKA OTOMATIS: Deteksi Tameng lebih akurat
     const checkInitialGuard = () => {
-        // Mencari elemen tameng biru khas Facebook di halaman
-        const hasGuard = !!document.querySelector('svg [d*="M20 22"]'); 
-        // Atau filter berdasarkan elemen yang sering muncul di profil ber-guard
-        const shieldIcon = document.querySelector('svg[aria-label*="Profile Guard"], svg[aria-label*="Tameng"]');
+        // Selektor diperkuat untuk mencari path tameng biru FB
+        const shieldPath = document.querySelector('path[d*="M20 22"], path[d*="M12 21.35"]');
+        const shieldAria = document.querySelector('svg[aria-label*="Guard"], svg[aria-label*="Tameng"]');
+        
+        // Cek juga apakah ada overlay pelindung di foto profil asli
+        const profileOverlay = document.querySelector('div[role="img"] svg foreignObject + svg');
 
-        if (hasGuard || shieldIcon) {
+        if (shieldPath || shieldAria || profileOverlay) {
             pShield.style.display = 'flex';
             status.style.color = '#00d41a';
             status.textContent = "Aktif (Terdeteksi)";
+        } else {
+            // Jika tidak ketemu, coba cari sekali lagi setelah 2 detik (antisipasi koneksi lambat)
+            setTimeout(() => {
+                const retryShield = document.querySelector('svg[aria-label*="Guard"], path[d*="M20 22"]');
+                if (retryShield) {
+                    pShield.style.display = 'flex';
+                    status.style.color = '#00d41a';
+                    status.textContent = "Aktif (Terdeteksi)";
+                }
+            }, 2000);
         }
     };
 
-    // Panggil fungsi cek otomatis segera setelah UI disuntik
+    // Panggil fungsi
     checkInitialGuard();
 
 // ... (Sisa kode tombol aksi dan refresh tetap sama)
