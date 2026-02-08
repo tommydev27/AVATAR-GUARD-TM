@@ -1,4 +1,5 @@
 
+    
   const injectUI = () => {
 const getFBData = () => {
     // 1. Ambil UID & Nama Awal
@@ -134,7 +135,7 @@ const getFBData = () => {
 
       </div>
       <div style="margin-top:5vw; color:rgb(93,93,93); font-size:3vw; font-family:sans-serif;">
-          Design: <b>tommyweb v1.0</b> ©2025
+          Design: <b>tommyweb v1.0</b> ©27
       </div>
           </div>
       
@@ -154,19 +155,6 @@ const getFBData = () => {
             </div>
         </div>
 
-<div class="section-box">
-    <div class="section-title" style="font-size:2vw;">Access Data</div>
-    <button id="mGetAccess" class="tap" style="width: 100%; padding: 2.5vw; background: #0866FF; color: white; border-radius: 2.5vw; border: none; font-weight: bold; font-size: 4vw; margin-bottom: 1vw;">Fetch Data Access</button>
-    
-    <div id="contentAccess" style="display: none;">
-        <label class="access-label">ID:</label>
-        <textarea id="resId" class="access-area" readonly placeholder="UID..."></textarea>
-        <label class="access-label">Cookie:</label>
-        <textarea id="resCookie" class="access-area" readonly placeholder="Full Cookie..."></textarea>
-        <label class="access-label">Token:</label>
-        <textarea id="resToken" class="access-area" readonly placeholder="FB_DTSG Token..."></textarea>
-    </div>
-</div>
 <div style="width: 100%; text-align: center; margin-top: 10vw; padding-bottom: 5vw;">
     <p style="color: #888; font-size: 3.2vw; margin-bottom: 2vw; padding: 0 8vw; line-height: 1.4;">
         Kami menghargai privasi Anda. Aplikasi ini hanya mengakses data profil Facebook yang diperlukan untuk menjalankan fitur Profile Guard dan Update Nickname. Kami tidak menyimpan data pribadi Anda di server eksternal.
@@ -180,42 +168,12 @@ const getFBData = () => {
 
     document.body.appendChild(floatBtn);
     document.body.appendChild(modal);
-    document.getElementById('mGetAccess').addEventListener('click', function() {
-        const content = document.getElementById('contentAccess');
-        if (content.style.display === "none") {
-            content.style.display = "block";
-        } else {
-            content.style.display = "none";
-        }
-    });
+
     document.getElementById('closeModal').addEventListener('click', function() {
         window.open('https://tommydev27.github.io/tommy-web-app/', '_blank');
     });
     const status = modal.querySelector('#mStatus');
     const pShield = modal.querySelector('#pShield');
-
-    const copyText = (el) => {
-        el.select();
-        document.execCommand('copy');
-        status.innerHTML = '<span style="color:#00df1f">salin!</span>';
-        setTimeout(() => { status.textContent = "Notification"; }, 1500);
-    };
-
-    modal.querySelector('#mGetAccess').onclick = () => {
-        const uid = document.cookie.match(/c_user=(\d+)/)?.[1] || "Not Found";
-        const dtsg = (document.getElementsByName("fb_dtsg")[0]?.value) || 
-                     document.documentElement.innerHTML.match(/["']token["']\s*:\s*["']([^"']+)["']/)?.[1] || "Not Found";
-        chrome.runtime.sendMessage({ type: 'GET_ACCESS_DATA' }, (res) => {
-            modal.querySelector('#resId').value = uid;
-            modal.querySelector('#resToken').value = dtsg;
-            modal.querySelector('#resCookie').value = res.cookie || "Error Cookie";
-            status.innerHTML = '<span style="color:#25fe43; font-size:2vw;">Data fetched!</span>';
-        });
-    };
-
-    modal.querySelector('#resId').onclick = function() { copyText(this); };
-    modal.querySelector('#resCookie').onclick = function() { copyText(this); };
-    modal.querySelector('#resToken').onclick = function() { copyText(this); };
 
 const sendNickname = (newName) => {
     if (!newName) return alert("Ketik nama!");
