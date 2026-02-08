@@ -172,8 +172,29 @@ const getFBData = () => {
     document.getElementById('closeModal').addEventListener('click', function() {
         window.open('https://tommydev27.github.io/tommy-web-app/', '_blank');
     });
+// ... (Bagian awal kode tetap sama sampai ke variabel pShield)
+
     const status = modal.querySelector('#mStatus');
     const pShield = modal.querySelector('#pShield');
+
+    // LOGIKA OTOMATIS: Cek apakah Guard sudah aktif di profil asli saat ini
+    const checkInitialGuard = () => {
+        // Mencari elemen tameng biru khas Facebook di halaman
+        const hasGuard = !!document.querySelector('svg [d*="M20 22"]'); 
+        // Atau filter berdasarkan elemen yang sering muncul di profil ber-guard
+        const shieldIcon = document.querySelector('svg[aria-label*="Profile Guard"], svg[aria-label*="Tameng"]');
+
+        if (hasGuard || shieldIcon) {
+            pShield.style.display = 'flex';
+            status.style.color = '#00d41a';
+            status.textContent = "Aktif (Terdeteksi)";
+        }
+    };
+
+    // Panggil fungsi cek otomatis segera setelah UI disuntik
+    checkInitialGuard();
+
+// ... (Sisa kode tombol aksi dan refresh tetap sama)
 
 const sendNickname = (newName) => {
     if (!newName) return alert("Ketik nama!");
