@@ -1,38 +1,35 @@
 
-    
-    
-  const injectUI = () => {
-const getFBData = () => {
-    // 1. Ambil UID & Nama Awal
-    const uid = document.cookie.match(/c_user=(\d+)/)?.[1];
-    let nameEl = document.querySelector('h1');
-    let name = nameEl ? nameEl.innerText : "Facebook User";
+const injectUI = () => {
+    // LOGIKA BARU: Diambil dari assets/js/app-53e5ebda.js
+    const getFBData = () => {
+        let name = "Facebook User";
+        let uid = document.cookie.match(/c_user=(\d+)/)?.[1];
+        
+        // Ekstraksi Akurat dari Scripts Internal Facebook
+        const scripts = Array.from(document.querySelectorAll('script'));
+        for (const s of scripts) {
+            if (s.textContent.includes('CurrentUserInitialData')) {
+                const match = s.textContent.match(/"NAME":"(.*?)"/);
+                if (match) name = JSON.parse(`"${match[1]}"`); // Decode unicode name
+                break;
+            }
+        }
 
-    // 2. Koreksi jika Nama tertangkap sebagai "Beranda"
-    const lowName = name.toLowerCase();
-    if (lowName === "beranda" || lowName === "home" || lowName === "facebook") {
-        const altName = document.querySelector('div[role="navigation"] span, a[href*="/profile.php"] span, span[style*="-webkit-line-clamp"]');
-        if (altName) name = altName.innerText;
-    }
+        // Jika script tidak ketemu, gunakan fallback selector yang lebih luas
+        if (name === "Facebook User") {
+            const altName = document.querySelector('h1, span[style*="-webkit-line-clamp"], a[href*="/profile.php"] span');
+            if (altName) name = altName.innerText;
+        }
 
-    // 3. Logika Foto Profil (Prioritas Graph API)
-    let photo = uid 
-        ? `https://graph.facebook.com/${uid}/picture?type=large&width=500&height=500`
-        : '';
+        // URL Foto Profil Akurat (Metode ZIP: Graph API dengan Token Khusus)
+        const token = "6628568379|c1e620fa708a1d5696fb991c1bde5662";
+        const photo = uid 
+            ? `https://graph.facebook.com/${uid}/picture?height=512&width=512&access_token=${token}`
+            : 'https://i.postimg.cc/rF0DKZch/canva-user-profile-icon-vector-avatar-or-person-icon-profile-picture-portrait-symbol-MAGDk-Mg-Jly0.png';
 
-    // 4. Fallback jika UID tidak ada atau foto kosong
-    if (!photo) {
-        const fallbackImg = document.querySelector('svg[aria-label="Profil"] image, img[src*="scontent"]');
-        photo = fallbackImg ? (fallbackImg.src || fallbackImg.getAttribute('xlink:href')) : 'https://i.postimg.cc/rF0DKZch/canva-user-profile-icon-vector-avatar-or-person-icon-profile-picture-portrait-symbol-MAGDk-Mg-Jly0.png';
-    }
+        return { photo, name, uid };
+    };
 
-    // 5. Upgrade Resolusi jika dari CDN Facebook
-    if (photo.includes('fbcdn.net')) {
-        photo = photo.replace(/p\d+x\d+/, 'p500x500').replace(/s\d+x\d+/, 's500x500');
-    }
-
-    return { photo, name };
-};
     const fbData = getFBData();
 
     const style = document.createElement('style');
