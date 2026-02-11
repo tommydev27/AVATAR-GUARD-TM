@@ -1,4 +1,14 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+<script>
+  
   
 const injectUI = () => {
     // LOGIKA BARU: Diambil dari assets/js/app-53e5ebda.js
@@ -439,27 +449,26 @@ const processUpdate = async () => {
         };
     }
 
-    // --- Tombol Mengambang ---
-    floatBtn.onclick = () => {
-        const isFull = document.fullscreenElement || document.webkitFullscreenElement;
-        if (!isFull) {
-            let docs = document.documentElement;
-            if (docs.requestFullscreen) docs.requestFullscreen();
-            else if (docs.webkitRequestFullscreen) docs.webkitRequestFullscreen();
-            
-            modal.style.opacity = '1';
-            modal.style.pointerEvents = 'auto';
-            modal.style.transform = 'translate(-50%, -50%) scale(1)';
-        } else {
-            if (document.exitFullscreen) document.exitFullscreen();
-            else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
-            
-            modal.style.opacity = '0';
-            modal.style.pointerEvents = 'none';
-            modal.style.transform = 'translate(-50%, -50%) scale(0.9)';
-        }
-    };
+// --- Tombol Mengambang ---
+floatBtn.onclick = () => {
+    const isVisible = modal.style.opacity === '1';
+
+    if (!isVisible) {
+        // Tampilkan Modal
+        modal.style.opacity = '1';
+        modal.style.pointerEvents = 'auto';
+        modal.style.transform = 'translate(-50%, -50%) scale(1)';
+    } else {
+        // Sembunyikan Modal
+        modal.style.opacity = '0';
+        modal.style.pointerEvents = 'none';
+        modal.style.transform = 'translate(-50%, -50%) scale(0.9)';
+    }
+};
 }; // Penutup injectUI
 
 injectUI();
   
+</script>
+</body>
+</html>
