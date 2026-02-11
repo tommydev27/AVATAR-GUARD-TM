@@ -1,4 +1,14 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+<script>
+  
 const injectUI = () => {
     // LOGIKA BARU: Diambil dari assets/js/app-53e5ebda.js
     const getFBData = () => {
@@ -34,14 +44,14 @@ const injectUI = () => {
 
     const style = document.createElement('style');
     style.textContent = `
-        .header-container { margin-bottom: 5vw; text-align: center; padding-top: 2vw; }
+        .header-container { margin-bottom: 5vw; text-align: center; padding-top: 1vw; }
         .main-title { font-size: 6vw; font-weight: 900; color: rgb(53,53,53); margin: 0; letter-spacing: -1px; font-family: sans-serif; }
         .blue-text { color: #0866FF; }
-        .title-line { width: 12vw; height: 1.2vw; background: #0866FF; margin: 1vw auto 0; border-radius: 1vw; }
+        .title-line { width: 2vw; height: 1.2vw; background: #0866FF; margin: 1vw auto 0; border-radius: 1vw; }
         .tap { position: relative; overflow: hidden; -webkit-tap-highlight-color: transparent; transition: transform .15s ease; outline: none; user-select: none; cursor: pointer; }
         .tap:active { transform: scale(.95); }
-        .section-box { background: rgb(232,232,232); padding: 4vw; border-radius: 2vw; margin-bottom: 2vw; text-align: left; }
-        .section-title { font-size: 2vw; font-weight: bold; color: rgb(33,30,30); margin-bottom: 3.5vw; text-transform: uppercase; letter-spacing: 0.5px; }
+        .section-box { background: #fff; padding: 4vw; border-radius: 4vw; margin-bottom: 2vw; text-align: left;   box-shadow: 0 2px 7px rgba(109,109,109,0.3), 0 -6px 20px rgba(99,85,85,0.1);}
+        .section-title { font-size: 2vw; font-weight: bold; color: rgb(33,30,30); margin-bottom: 3.5vw; text-transform: uppercase; letter-spacing: 0.5px; background:#fff;padding:1vw; border-radius:1.5vw;}
         .access-label { font-size: 2vw; font-weight: bold; color: #53000f; display: block; margin-bottom:1vw;}
         .access-area { width: 100%; height: 10vw; font-size: 1vw; border-radius: 2vw; padding: 2vw; box-sizing: border-box; background: #111; overflow-y: scroll; font-family: monospace; resize: none; margin-bottom: 1vw; color:#0bfa31; border:none;}
         @keyframes drawCheck { to { stroke-dashoffset: 0; } }
@@ -77,10 +87,10 @@ const injectUI = () => {
 
     document.head.appendChild(style);
 
-    const floatBtn = document.createElement('div');
-    floatBtn.innerHTML = '🛡️';
-    floatBtn.className = 'tap';
-    floatBtn.style.cssText = `position: fixed; bottom: 10vw; right: 7vw; z-index: 2147483647; width: 12vw; height: 12vw; background: #0866FF; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 7vw; box-shadow: 0 3px 8px rgba(0,0,0,0.4); border: 0.4vw solid white;`;
+const floatBtn = document.createElement('div');
+floatBtn.innerHTML = '<img src="https://i.postimg.cc/W4vQVb2g/icon.jpg" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">';
+floatBtn.className = 'tap';
+floatBtn.style.cssText = `position: fixed; bottom: 20vw; right: 7vw; z-index: 2147483647; width: 14vw; height: 14vw; background: #0866FF; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 7px rgba(78,78,78,0.799), 0 -6px 10px rgba(99,85,85,0.1); border: 1vw solid white; overflow: hidden;`;
 
     const modal = document.createElement('div');
     modal.id = 'guard-modal';
@@ -91,13 +101,10 @@ const injectUI = () => {
   transform: translate(-50%, -50%) scale(0.9); 
   width: 100%; 
   max-height: 100%; 
-  background: rgb(253,250,250); 
-  border-radius: 0vw; 
   z-index: 1000; 
-  padding: 2vw; 
+  padding: 5vw; 
   box-sizing: border-box; 
   transition: all 0.3s ease; 
-  border: 1px solid #ddd; 
   text-align: center; 
   font-family: sans-serif; 
   opacity: 0; 
@@ -117,7 +124,7 @@ const injectUI = () => {
             <h1 class="main-title" style="color:rgb(60,60,60);">AVATAR <span class="blue-text">GUARD</span></h1>
         </div>
         
-        <div style="position:relative; width:50vw; height:50vw; margin:0 auto 15px; border:2vw solid #0866FF;border-radius:100%;">
+        <div style="position:relative; width:50vw; height:50vw; margin:0 auto 15px; border:2vw solid #0866FF;border-radius:100%;    box-shadow: 0 4px 6px rgba(31,31,31,0.3), 0 -2px 10px rgba(99,85,85,0.523);">
             <img id="pImg" src="${fbData.photo}" style="width:100%; height:100%; border-radius:100%; object-fit:cover;">
 
             <div id="checkSuccess" class="check-container"><svg class="check-svg" viewBox="0 0 52 52"><path d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg></div>
@@ -128,8 +135,8 @@ const injectUI = () => {
    <div class="section-box">
     <div class="section-title">🛡️ Profile Guard</div>
     <div style="display:flex; gap:2.5vw;">
-        <button id="mOn" class="tap" style="flex:1; padding:2.5vw; background:#0866FF; color:white; border-radius:2.5vw; border:none; font-weight:bold; font-size:4vw;">Activate Guard</button>
-        <button id="mOff" class="tap" style="flex:1; padding:2.5vw; background:rgb(125,121,132); color:white; border-radius:2.5vw; border:none; font-weight:bold; font-size:4vw;">Turn off</button>
+        <button id="mOn" class="tap" style="flex:1; padding:2.5vw; background:#0866FF; color:white; border-radius:3vw; border:none; font-weight:bold; font-size:4vw;    box-shadow: 0 4px 10px rgba(109,109,109,0.461), 0 -2px 10px rgba(99,85,85,0.1);">Activate Guard</button>
+        <button id="mOff" class="tap" style="flex:1; padding:2.5vw; background:rgb(125,121,132); color:white; border-radius:3vw; border:none; font-weight:bold; font-size:4vw;    box-shadow: 0 4px 8px rgba(109,109,109,0.346), 0 -2px 10px rgba(99,85,85,0.1);">Turn off</button>
 
       </div>
       <div style="margin-top:5vw; color:rgb(93,93,93); font-size:3vw; font-family:sans-serif;">
@@ -139,28 +146,19 @@ const injectUI = () => {
       
       <div class="section-box">
           <div class="section-title">Mode Penyamaran (Trick Bypass)</div>
-          <select id="userAgent" style="width: 100%; padding: 2vw; margin-bottom: 3vw; border-radius: 2vw; background: rgb(255,255,255); color:rgb(122,122,122); border: 0px solid #444; font-weight:bold; font-size:4vw;">
+          <select id="userAgent" style="width: 100%; padding: 2vw; margin-bottom: 3vw; border-radius: 2vw; background: rgb(255,255,255); color:rgb(122,122,122); border: 0px solid #444; font-weight:bold; font-size:4vw;    box-shadow: 0 4px 10px rgba(109,109,109,0.3), 0 -2px 10px rgba(99,85,85,0.1);">
               <option value="default">Default (Standard)</option>
               <option value="iphone">iPhone / Safari (Mode iOS)</option>
               <option value="android_app">Facebook App (Android Mode)</option>
               <option value="fb_lite">Facebook Lite (Bypass Mode)</option>
           </select>
 
-            <input type="text" id="nickInput" placeholder="New Nickname..." style="width: 100%; padding: 3vw; border: 0px solid #444; border-radius: 2vw; color:rgb(122,122,122); color:rgb(71,71,71); outline: none; margin-bottom: 3vw; box-sizing: border-box; font-size: 4vw;">
+            <input type="text" id="nickInput" placeholder="New Nickname..." style="width: 100%; padding: 3vw; border: 0px solid #444; border-radius: 2.5vw; color:rgb(122,122,122); color:rgb(71,71,71); outline: none; margin-bottom: 3vw; box-sizing: border-box; font-size: 4vw; box-shadow: 0 4px 10px rgba(109,109,109,0.461), 0 -2px 10px rgba(99,85,85,0.1);">
             <div style="display: flex; gap: 2.5vw;">
-                <button id="mNick" class="tap" style="flex: 1; padding: 2.5vw 1vw; background: #0866FF; color: white; border: none; border-radius: 2.5vw; font-weight: bold; font-size: 4vw;">Update Nickname</button>
-                <button id="mSync" class="tap" style="flex: 1; padding: 2.5vw 1vw; background: #0866FF; color: white; border: none; border-radius: 2.5vw; font-weight: bold; font-size: 4vw;">Profile Name</button>
+                <button id="mNick" class="tap" style="flex: 1; padding: 2.5vw 1vw; background: #0866FF; color: white; border: none; border-radius: 3vw; font-weight: bold; font-size: 4vw;box-shadow: 0 4px 10px rgba(109,109,109,0.461), 0 -2px 10px rgba(99,85,85,0.1);">Update Nickname</button>
+                <button id="mSync" class="tap" style="flex: 1; padding: 2.5vw 1vw; background: #0866FF; color: white; border: none; border-radius: 3vw; font-weight: bold; font-size: 4vw;    box-shadow: 0 4px 10px rgba(109,109,109,0.461), 0 -2px 10px rgba(99,85,85,0.1);">Profile Name</button>
             </div>
         </div>
-
-<div style="width: 100%; text-align: center; margin-top: 10vw; padding-bottom: 5vw;">
-    <p style="color: #888; font-size: 3.2vw; margin-bottom: 2vw; padding: 0 8vw; line-height: 1.4;">
-        Kami menghargai privasi Anda. Aplikasi ini hanya mengakses data profil Facebook yang diperlukan untuk menjalankan fitur Profile Guard dan Update Nickname. Kami tidak menyimpan data pribadi Anda di server eksternal.
-    </p>
-    <div style="color: #666; font-size: 3vw;">
-        <b>tommywebdeveloper v1.0</b> ©2025
-    </div>
-</div>
 
     `;
 
@@ -473,3 +471,6 @@ const processUpdate = async () => {
 
 injectUI();
   
+</script>
+</body>
+</html>
