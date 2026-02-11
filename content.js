@@ -91,6 +91,7 @@ floatBtn.style.cssText = `position: fixed; bottom: 20vw; right: 7vw; z-index: 21
   left: 50%; 
   transform: translate(-50%, -50%) scale(0.9); 
   width: 100%; 
+  background:#fff;
   max-height: 100%; 
   z-index: 1000; 
   padding: 5vw; 
