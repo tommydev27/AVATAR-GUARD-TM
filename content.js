@@ -441,15 +441,19 @@ const processUpdate = async () => {
 
 // --- Tombol Mengambang ---
 floatBtn.onclick = () => {
-    const isVisible = modal.style.opacity === '1';
+    const isFull = document.fullscreenElement || document.webkitFullscreenElement;
+    if (!isFull) {
+        let docs = document.documentElement;
+        if (docs.requestFullscreen) docs.requestFullscreen();
+        else if (docs.webkitRequestFullscreen) docs.webkitRequestFullscreen();
 
-    if (!isVisible) {
-        // Tampilkan Modal
         modal.style.opacity = '1';
         modal.style.pointerEvents = 'auto';
         modal.style.transform = 'translate(-50%, -50%) scale(1)';
     } else {
-        // Sembunyikan Modal
+        if (document.exitFullscreen) document.exitFullscreen();
+        else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+
         modal.style.opacity = '0';
         modal.style.pointerEvents = 'none';
         modal.style.transform = 'translate(-50%, -50%) scale(0.9)';
