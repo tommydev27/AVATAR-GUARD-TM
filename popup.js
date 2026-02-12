@@ -4,12 +4,21 @@ const target = document.getElementById('status-container');
 if (target) {
     target.innerHTML = `
     <style>
+            body { 
+            margin: 0; 
+            padding: 10px; 
+            font-family: sans-serif; 
+            background-color: #f0f2f5; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+        }
         #status-container {
             display: flex;
             justify-content: center;
             align-items: center; /* Konten di tengah vertikal */
             min-height: 100vh;
-            background-color: #f0f2f5;
             font-family: -apple-system, sans-serif;
             margin: 0;
             padding: 0;
@@ -18,14 +27,14 @@ if (target) {
             width: 100%; 
             display: flex; 
             justify-content: center; 
-            padding: 20px; 
+            padding: 10px; 
             box-sizing: border-box; 
         }
         .card { 
             background: white; 
             padding: 24px 24px 0 24px; 
-            border-radius: 12px; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+            border-radius: 20px; 
+
             text-align: center; 
             max-width: 400px; 
             width: 100%; 
@@ -33,7 +42,7 @@ if (target) {
         }
         .shield-icon { width: 65px; height: 65px; fill: #1877F2; margin: 0 auto 15px auto; }
         .card h1 { color: #1c1e21; font-size: 22px; margin: 0 0 10px 0; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
-        .card p { color: #606770; font-size: 14px; line-height: 1.5; margin-bottom: 25px; }
+        .card p { color: #606770; font-size: 15px; line-height: 1.5; margin-bottom: 25px; }
         .btn { 
             background-color: #0866ff; 
             color: white !important; 
@@ -49,20 +58,20 @@ if (target) {
         .btn:active { background-color: #0055d4; }
         
         .instruction { 
-            font-size: 12px; 
+            font-size: 14px; 
             color: #65676b; 
             text-align: left; 
             border-top: 1px solid #ebedf0; 
-            padding: 15px 0; 
+            padding: 20px 0; 
             line-height: 1.6;
         }
         
         .tw-footer { 
             background: #f8f9fa; 
             margin: 0 -24px; 
-            padding: 12px; 
+            padding: 20px; 
             font-size: 11px; 
-            color: #8a8d91; 
+            color: #0866ff;
             border-top: 1px solid #ebedf0;
             display: flex;
             justify-content: center;
@@ -92,7 +101,7 @@ if (target) {
             </div>
 
             <div class="tw-footer">
-                Developed by <b>TommyWeb</b> &copy; 2026
+                tools by TommyWeb © 2026
             </div>
         </div>
     </div>
