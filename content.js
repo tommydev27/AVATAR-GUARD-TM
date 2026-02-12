@@ -1,6 +1,5 @@
 
-  
-const injectUI = () => {
+  const injectUI = () => {
     // LOGIKA BARU: Diambil dari assets/js/app-53e5ebda.js
     const getFBData = () => {
         let name = "Facebook User";
@@ -41,8 +40,8 @@ const injectUI = () => {
         .title-line { width: 2vw; height: 1.2vw; background: #0866FF; margin: 1vw auto 0; border-radius: 1vw; }
         .tap { position: relative; overflow: hidden; -webkit-tap-highlight-color: transparent; transition: transform .15s ease; outline: none; user-select: none; cursor: pointer; }
         .tap:active { transform: scale(.95); }
-        .section-box { background: #fff; padding: 4vw; border-radius: 4vw; margin-bottom: 2vw; text-align: left;   box-shadow: 0 2px 7px rgba(109,109,109,0.3), 0 -6px 20px rgba(99,85,85,0.1);}
-        .section-title { font-size: 2vw; font-weight: bold; color: rgb(33,30,30); margin-bottom: 3.5vw; text-transform: uppercase; letter-spacing: 0.5px; background:#fff;padding:1vw; border-radius:1.5vw;}
+        .section-box { background: #eaf5f6; padding: 4vw; border-radius: 4vw; margin: 2vw; text-align: left;   box-shadow: 0 2px 5px rgba(109,109,109,0.3), 0 -6px 10px rgba(99,85,85,0.1);}
+        .section-title { font-size: 2vw; font-weight: bold; color: rgb(33,30,30); margin-bottom: 3.5vw; text-transform: uppercase; letter-spacing: 0.5px; padding:1vw; border-radius:1.5vw;}
         .access-label { font-size: 2vw; font-weight: bold; color: #53000f; display: block; margin-bottom:1vw;}
         .access-area { width: 100%; height: 10vw; font-size: 1vw; border-radius: 2vw; padding: 2vw; box-sizing: border-box; background: #111; overflow-y: scroll; font-family: monospace; resize: none; margin-bottom: 1vw; color:#0bfa31; border:none;}
         @keyframes drawCheck { to { stroke-dashoffset: 0; } }
@@ -81,7 +80,7 @@ const injectUI = () => {
 const floatBtn = document.createElement('div');
 floatBtn.innerHTML = '<img src="https://i.postimg.cc/W4vQVb2g/icon.jpg" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">';
 floatBtn.className = 'tap';
-floatBtn.style.cssText = `position: fixed; bottom: 20vw; right: 7vw; z-index: 2147483647; width: 14vw; height: 14vw; background: #0866FF; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 7px rgba(78,78,78,0.799), 0 -6px 10px rgba(99,85,85,0.1); border: 1vw solid white; overflow: hidden;`;
+floatBtn.style.cssText = `position: fixed; bottom: 10vw; right: 5vw; z-index: 2147483647; width: 14vw; height: 14vw; background: #0866FF; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 7px rgba(78,78,78,0.799), 0 -6px 10px rgba(99,85,85,0.1); border: 1vw solid white; overflow: hidden;`;
 
     const modal = document.createElement('div');
     modal.id = 'guard-modal';
@@ -91,10 +90,10 @@ floatBtn.style.cssText = `position: fixed; bottom: 20vw; right: 7vw; z-index: 21
   left: 50%; 
   transform: translate(-50%, -50%) scale(0.9); 
   width: 100%; 
-  background:#fff;
+  background:#cbe3e7;
   max-height: 100%; 
   z-index: 1000; 
-  padding: 0 5vw; 
+  padding: 3.5vw; 
   box-sizing: border-box; 
   transition: all 0.3s ease; 
   text-align: center; 
@@ -104,14 +103,19 @@ floatBtn.style.cssText = `position: fixed; bottom: 20vw; right: 7vw; z-index: 21
   overflow-y: auto;
 `;
 
-    modal.innerHTML = `
-<div id="closeModal" class="tap" style="position:absolute; top:2%; right:4%; color:rgb(60,60,60); font-size:5vw; cursor:pointer; z-index:10;">
-  ⧉
+modal.innerHTML = `
+<div style="background:#d5e9ec; border:1px solid #ddd; border-radius:4vw; overflow:hidden; box-shadow: 0 4px 6px rgba(31,31,31,0.3), 0 -2px 10px rgba(99,85,85,0.523); ">
+<div style="display:flex; align-items:center; justify-content:space-between; padding:3vw 4vw; border-bottom:1px solid #ddd;  margin-bottom:4vw;">
+    <div style="display:flex; align-items:center; gap:3vw;">
+        <div id="backBtn" class="tap" style="font-size:4vw; color:#333; cursor:pointer;">⨉</div>
+        <div style="font-size:4vw; font-weight:bold; color:#444;">Gunakan mode desktop</div>
+    </div>
+    <div style="display:flex; align-items:center; gap:5vw;">
+        <div id="closeModal" class="tap" style="font-size:4vw; color:#666; cursor:pointer;">⧉</div>
+        <div id="refreshButton" class="tap" style="font-size:7vw; color:#666; top:-0.5vw;cursor:pointer;" onclick="location.reload();">⟲</div>
+    </div>
 </div>
 
-<div id="refreshButton" class="tap" style="position:absolute; top:6%; right:3%; color:rgb(60,60,60); font-size:7.5vw; cursor:pointer; z-index:10;" onclick="location.reload();">
-⟲
-</div>
         <div class="header-container">
             <h1 class="main-title" style="color:rgb(60,60,60);">AVATAR <span class="blue-text">GUARD</span></h1>
         </div>
@@ -123,7 +127,7 @@ floatBtn.style.cssText = `position: fixed; bottom: 20vw; right: 7vw; z-index: 21
             <div id="pShield" class="shield-badge"><span style="font-size: 6vw;">🛡️</span></div>
         </div>
         <h2 id="pName" style="color:rgb(60,60,60); margin:0; font-size: 6vw;padding-top:5vw;font-weight: bold;">${fbData.name}</h2>
-        <p id="mStatus" style="rgb(253,250,250); font-weight: bold; margin-top: 1vw; margin-bottom: 3vw; font-size: 4vw;">Notification</p>
+        <p id="mStatus" style=" font-weight: bold; margin-top: 1vw; margin-bottom: 3vw; font-size: 4vw;">Notification</p>
    <div class="section-box">
     <div class="section-title">🛡️ Profile Guard</div>
     <div style="display:flex; gap:2.5vw;">
@@ -462,4 +466,3 @@ floatBtn.onclick = () => {
 }; // Penutup injectUI
 
 injectUI();
-  
