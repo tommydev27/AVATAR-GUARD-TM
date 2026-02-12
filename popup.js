@@ -101,7 +101,7 @@ if (target) {
             </div>
 
             <div class="tw-footer">
-                tools by TommyWeb © 2026
+                tools by Tommy © 2026
             </div>
         </div>
     </div>
