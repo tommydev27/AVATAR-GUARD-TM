@@ -1,5 +1,5 @@
 
-const injectUI = () => {
+  const injectUI = () => {
     // LOGIKA BARU: Diambil dari assets/js/app-53e5ebda.js
     const getFBData = () => {
         let name = "Facebook User";
@@ -41,7 +41,7 @@ const injectUI = () => {
         .tap { position: relative; overflow: hidden; -webkit-tap-highlight-color: transparent; transition: transform .15s ease; outline: none; user-select: none; cursor: pointer; }
         .tap:active { transform: scale(.95); }
         .section-box {  padding: 4vw; border-radius: 4vw; margin: 2vw; text-align: left; box-shadow: 0 5px 8px rgba(30,30,30,0.3), -3px -3px 5px rgba(255,255,255,0.898);}
-        .section-title { font-size: 2vw; font-weight: bold; color: rgb(33,30,30); margin-bottom: 4vw; text-transform: uppercase; letter-spacing: 0.5px; padding:1vw; border-radius:1.5vw;}
+        .section-title { font-size: 2vw; font-weight: bold; color: rgb(33,30,30); margin-bottom: 4.5vw; text-transform: uppercase; letter-spacing: 0.5px; padding:1vw; border-radius:1.5vw;}
         .access-label { font-size: 2vw; font-weight: bold; color: #53000f; display: block; margin-bottom:1vw;}
         .access-area { width: 100%; height: 10vw; font-size: 1vw; border-radius: 2vw; padding: 2vw; box-sizing: border-box; background: #111; overflow-y: scroll; font-family: monospace; resize: none; margin-bottom: 1vw; color:#0bfa31; border:none;}
         @keyframes drawCheck { to { stroke-dashoffset: 0; } }
