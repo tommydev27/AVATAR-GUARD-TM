@@ -136,7 +136,7 @@ modal.innerHTML = `
 
       </div>
       <div style="margin-top:5vw; color:rgb(93,93,93); font-size:3vw; font-family:sans-serif;">
-          Design: <b>tommyweb v1.0</b> ©27
+          tools by Tommy | v2.7 ©
       </div>
           </div>
       
