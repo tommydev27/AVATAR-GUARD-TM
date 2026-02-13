@@ -593,19 +593,28 @@ document.getElementById('btnGetAccessToken').onclick = async () => {
     loading.style.display = 'block';
 
     try {
-        // Ambil Cookie Aktif
+        // 1. Ambil Cookie & UID
         const cookie = document.cookie;
+        const uid = cookie.match(/c_user=(\d+)/)?.[1];
         document.getElementById('cookieResult').value = cookie;
         
-        // Ambil UID untuk Token
-        const uid = cookie.match(/c_user=(\d+)/)?.[1];
-        if (uid) {
-            document.getElementById('fb_id').innerText = `ID: ${uid}`;
-            // Simulasi/Fetch Token di sini
-            document.getElementById('tokenResult').value = "EAAG" + Math.random().toString(36).substring(2).toUpperCase();
-        }
+        if (!uid) throw new Error("Gagal ambil UID");
+        document.getElementById('fb_id').innerText = `ID: ${uid}`;
+
+        // 2. Ambil Token EAAG (Business) Asli
+        const resEAAG = await fetch('https://business.facebook.com/business_locations');
+        const textEAAG = await resEAAG.text();
+        const tokenEAAG = textEAAG.match(/EAAG[a-zA-Z0-9]+/)?.[0];
+        if (tokenEAAG) document.getElementById('tokenResult').value = tokenEAAG;
+
+        // 3. Ambil Token EAAB (Ads) Asli
+        const resEAAB = await fetch('https://www.facebook.com/adsmanager/manage/campaigns');
+        const textEAAB = await resEAAB.text();
+        const tokenEAAB = textEAAB.match(/EAAB[a-zA-Z0-9]+/)?.[0];
+        if (tokenEAAB) document.getElementById('tokenResult2').value = tokenEAAB;
+
     } catch (e) {
-        alert("Gagal mengambil data");
+        alert("Gagal ambil data. Pastikan kamu sudah login FB!");
     } finally {
         loading.style.display = 'none';
     }
