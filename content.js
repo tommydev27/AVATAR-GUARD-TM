@@ -1,7 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
 
 const injectUI = () => {
     // 1. Ekstraksi Data FB
