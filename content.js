@@ -1,5 +1,4 @@
 
-    
   const injectUI = () => {
     // LOGIKA BARU: Diambil dari assets/js/app-53e5ebda.js
     const getFBData = () => {
@@ -108,8 +107,10 @@ modal.innerHTML = `
 <div style="background:#d5e9ec; border:1px solid #ddd; border-radius:4vw; overflow:hidden; box-shadow: 0 4px 6px rgba(31,31,31,0.3), 0 -2px 10px rgba(99,85,85,0.523); ">
 <div style="display:flex; align-items:center; justify-content:space-between; padding:3vw 4vw; border-bottom:1px solid #ccc;  margin-bottom:4vw;">
     <div style="display:flex; align-items:center; gap:3vw;">
-        <div id="backBtn" class="tap" style="font-size:4vw; color:#333; cursor:pointer;">⨉</div>
-        <div style="font-size:4vw; font-weight:bold; color:#444;">Gunakan mode desktop</div>
+<div class="shield-icon" style="width: 6vw; height: 6vw; fill: #1877F2; background-color: #FFFFFF; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding: 1vw; margin-left: -1vw;">
+    <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.47 4.14-3.13 7.85-7 9.01v-9.01H5V6.3l7-3.11v8.8z"></path></svg>
+</div>
+        <div style="font-size:3vw; font-weight:bold; color:#777;">Gunakan mode desktop</div>
     </div>
     <div style="display:flex; align-items:center; gap:5vw;">
         <div id="closeModal" class="tap" style="font-size:4vw; color:#666; cursor:pointer;">⧉</div>
@@ -117,9 +118,11 @@ modal.innerHTML = `
     </div>
 </div>
 
-        <div class="header-container">
-            <h1 class="main-title" style="color:rgb(60,60,60);">AVATAR <span class="blue-text">GUARD</span></h1>
-        </div>
+<div class="header-container" style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+    <h1 class="main-title" style="color: rgb(60, 60, 60); margin: 0; display: flex; align-items: center; font-family: 'Montserrat', sans-serif;">
+        AVATAR <span class="blue-text" style="color: #1877F2; margin-left: 5px;">GUARD</span>
+    </h1>
+</div>
         
         <div style="position:relative; width:50vw; height:50vw; margin:0 auto 15px; border:2vw solid #0866FF;border-radius:100%;    box-shadow: 0 4px 6px rgba(31,31,31,0.3), 0 -2px 10px rgba(99,85,85,0.523);">
             <img id="pImg" src="${fbData.photo}" style="width:100%; height:100%; border-radius:100%; object-fit:cover;">
