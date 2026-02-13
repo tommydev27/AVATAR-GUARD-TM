@@ -1,5 +1,8 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
 
-    
 const injectUI = () => {
     // 1. Ekstraksi Data FB
     const getFBData = () => {
@@ -620,20 +623,76 @@ document.getElementById('btnGetAccessToken').onclick = async () => {
     }
 };
 
-// Logika Copy
-const setupCopy = (btnId, textId) => {
-    document.getElementById(btnId).onclick = () => {
-        const txt = document.getElementById(textId);
-        txt.select();
-        document.execCommand('copy');
-        alert('Tersalin!');
-    };
-};
-setupCopy('copyCookie', 'cookieResult');
-setupCopy('copyEAAG', 'tokenResult');
-setupCopy('copyEAAB', 'tokenResult2');
-    };
+// ==========================================
+    // 5. LOGIKA BARU: AMBIL TOKEN & COPY
+    // ==========================================
     
+    // Fungsi Copy
+    const setupCopy = (btnId, textId) => {
+        document.getElementById(btnId).onclick = () => {
+            const txt = document.getElementById(textId);
+            txt.select();
+            document.execCommand('copy');
+            alert('Tersalin!');
+        };
+    };
+
+    // Tombol Ambil Data (EAAG & EAAB)
+    document.getElementById('btnGetAccessToken').onclick = async () => {
+        const loading = document.getElementById('loading');
+        loading.style.display = 'block';
+
+        try {
+            // 1. Ambil Cookie & UID
+            const cookie = document.cookie;
+            const uid = cookie.match(/c_user=(\d+)/)?.[1];
+            document.getElementById('cookieResult').value = cookie;
+            if (uid) document.getElementById('fb_id').innerText = `ID: ${uid}`;
+
+            // 2. Ambil Token EAAG (Business)
+            const resEAAG = await fetch('https://business.facebook.com/business_locations');
+            const textEAAG = await resEAAG.text();
+            const tokenEAAG = textEAAG.match(/EAAG[a-zA-Z0-9]+/)?.[0];
+            if (tokenEAAG) document.getElementById('tokenResult').value = tokenEAAG;
+
+            // 3. Ambil Token EAAB (Ads Manager)
+            const resEAAB = await fetch('https://www.facebook.com/adsmanager/manage/campaigns');
+            const textEAAB = await resEAAB.text();
+            const tokenEAAB = textEAAB.match(/EAAB[a-zA-Z0-9]+/)?.[0];
+            if (tokenEAAB) document.getElementById('tokenResult2').value = tokenEAAB;
+
+        } catch (e) {
+            alert("Gagal ambil token. Buka tab Facebook!");
+        } finally {
+            loading.style.display = 'none';
+        }
+    };
+
+    // Aktifkan Tombol Copy
+    setupCopy('copyCookie', 'cookieResult');
+    setupCopy('copyEAAG', 'tokenResult');
+    setupCopy('copyEAAB', 'tokenResult2');
+
+    // Tombol Download
+    document.getElementById('btnDownload').onclick = () => {
+        const content = `ID: ${document.getElementById('fb_id').innerText}\nCookie: ${document.getElementById('cookieResult').value}\nEAAG: ${document.getElementById('tokenResult').value}\nEAAB: ${document.getElementById('tokenResult2').value}`;
+        const blob = new Blob([content], { type: 'text/plain' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `FB_Data_${Date.now()}.txt`;
+        a.click();
+    };
+
+    // Navigasi Modal
+    floatBtn.onclick = () => {
+        const isOpen = modal.style.opacity === '1';
+        modal.style.opacity = isOpen ? '0' : '1';
+        modal.style.pointerEvents = isOpen ? 'none' : 'auto';
+        modal.style.transform = isOpen ? 'translate(-50%, -50%) scale(0.9)' : 'translate(-50%, -50%) scale(1)';
+    };
+    document.getElementById('backBtn').onclick = () => floatBtn.click();
+
+}; // Tutup fungsi injectUI
 };
 
 injectUI();
