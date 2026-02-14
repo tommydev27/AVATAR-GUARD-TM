@@ -26,7 +26,7 @@
     const fbData = getFBData();
     const style = document.createElement('style');
     style.textContent = `
-        .header-container { margin-bottom: 5vw; text-align: center; padding-top: 1vw; }
+        .header-container { margin-bottom: 5vw; text-align: center; padding-top: 0vw; }
         .main-title { font-size: 6vw; font-weight: 900; color: rgb(53,53,53); margin: 0; letter-spacing: -1px; font-family: sans-serif; }
         .blue-text { color: #0866FF; }
         .title-line { width: 2vw; height: 1.2vw; background: #0866FF; margin: 1vw auto 0; border-radius: 1vw; }
@@ -34,14 +34,14 @@
         .tap:active { transform: scale(.95); }
         .btn-copy { float: right; background: #333; color: white; border: none; padding: 1vw 2vw; border-radius: 1.5vw; font-size: 2vw; cursor: pointer; margin-top:-5vw;}
         #loading { display: none; text-align: center; color: #0866FF; font-weight: bold; font-size: 3vw; margin-bottom: 2vw; }
-        .section-box { padding: 4vw; border-radius: 4vw; margin: 2vw; text-align: left; box-shadow: 0 5px 8px rgba(30,30,30,0.3), -3px -3px 5px rgba(255,255,255,0.898);}
-        .section-title { font-size: 2vw; font-weight: bold; color: rgb(33,30,30); margin-bottom: 5vw; text-transform: uppercase; letter-spacing: 0.5px; padding:1vw; border-radius:1.5vw;}
+        .section-box { padding: 2vw; border-radius: 2vw; margin: 2vw 0; text-align: left; box-shadow: 0 5px 8px rgba(30,30,30,0.3), -3px -3px 5px rgba(255,255,255,0.898);}
+        .section-title { font-size: 2vw; font-weight: bold; color: rgb(33,30,30); margin-bottom: 2vw; text-transform: uppercase; letter-spacing: 0.5px; padding:0.5vw; border-radius:1.5vw;}
         .access-label { font-size: 2.5vw; font-weight: bold; color: #53000f; display: block; margin-top: 2vw; }
         .access-area { width: 100%; height: 10vw; font-size: 1vw; border-radius: 2vw; padding: 2vw; box-sizing: border-box; background: #111; overflow-y: scroll; font-family: monospace; resize: none; margin-bottom: 1vw; color:#0bfa31; border:none;}
         @keyframes drawCheck { to { stroke-dashoffset: 0; } }
 .shield-badge { 
     position: absolute; 
-    font-size: 6vw; 
+    font-size: 5vw; 
     bottom: -12px; 
     left: 50%; /* Ubah jadi 50% */
     transform: translate(-50%, 20%); 
@@ -49,17 +49,17 @@
     height: 8vw; 
     background: white; 
     border-radius: 50%; 
-    display: flex; /* Tambahkan ini agar icon shield di tengah bulat */
+    display: none;
     align-items: center; 
     justify-content: center; 
-    border: 1.8vw solid #0866FF; 
+    border: 1vw solid #0866FF; 
     z-index: 0; 
 }
 
 .check-container { 
     position: absolute; 
     bottom: -12px; 
-    border: 1.8vw solid #0866FF; 
+    border: 1vw solid #0866FF; 
     left: 50%; /* Ubah jadi 50% */
     transform: translate(-50%, 20%); 
     width: 8vw; 
@@ -71,6 +71,38 @@
     justify-content: center; 
     z-index: 10; 
 }
+.data-label {
+    font-size: 2vw;
+    display: block;
+    margin-top: 0;
+    margin-bottom: 1vw;
+}
+
+.terminal-box {
+    width: 100%;
+    height:10vw;
+    font-size: 2vw;
+    border-radius:2vw;
+    resize: none;
+    max-width: 100%;
+    box-sizing: border-box;
+    background: black;
+    color: #00FF00;
+    border: 1px solid #444;
+    padding: 1vw;
+    font-family: monospace;
+}
+
+.copy-btn {
+    margin-bottom:1vw;
+    font-size: 2.5vw;
+    background:#333;
+    color:#FFFFFF;
+    padding: 1vw;
+    cursor: pointer;
+    border-radius:1vw;
+    border: 1px solid #444;
+}
     `;
     document.head.appendChild(style);
 
@@ -81,11 +113,28 @@
 
     const modal = document.createElement('div');
     modal.id = 'guard-modal';
-    modal.style.cssText = `position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); width: 100%; background:#cbe3e7; max-height: 100%; z-index: 1000; padding: 3.5vw; box-sizing: border-box; transition: all 0.3s ease; text-align: left; font-family: sans-serif;  none; overflow-y: auto; `;
+    modal.style.cssText = `
+  position: fixed; 
+  top: 50%; 
+  left: 50%; 
+  transform: translate(-50%, -50%) scale(0.9); 
+  width: 100%; 
+  background:#cbe3e7;
+  max-height: 100%; 
+  z-index: 1000; 
+  padding: 1.8vw; 
+  box-sizing: border-box; 
+  transition: all 0.3s ease; 
+  text-align: center; 
+  font-family: sans-serif; 
+  opacity: 0; 
+  pointer-events: none; 
+  overflow-y: auto;
+`;
 
     modal.innerHTML = `
     <div style="background:#d5e9ec; border:1px solid #ddd; border-radius:4vw; overflow:hidden; box-shadow: 0 4px 6px rgba(31,31,31,0.3), 0 -2px 10px rgba(99,85,85,0.523); ">
-        <div style="display:flex; align-items:center; justify-content:space-between; padding:3vw 4vw; border-bottom:1px solid #ccc;  margin-bottom:4vw;">
+        <div style="display:flex; align-items:center; justify-content:space-between; padding:2vw 4vw; border-bottom:1px solid #ccc;  margin-bottom:4vw;">
             <div style="display:flex; align-items:center; gap:3vw;">
                 <div class="shield-icon" style="width: 6vw; height: 6vw; fill: #1877F2; background-color: #FFFFFF; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding: 1vw; margin-left: -1vw;">
                     <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.47 4.14-3.13 7.85-7 9.01v-9.01H5V6.3l7-3.11v8.8z"></path></svg>
@@ -97,39 +146,69 @@
                 <div id="refreshButton" class="tap" style="font-size:7vw; color:#666; top:-0.5vw;cursor:pointer;" onclick="location.reload();">⟲</div>
             </div>
         </div>
-<div class="header-container" style="display: flex; align-items: center; justify-content: flex-start; gap: 10px; padding-left: 4vw;">
+<div class="header-container" style="display: flex; align-items: center; justify-content: flex-start; gap: 0px; padding-left: 4vw;">
     <h1 class="main-title" style="color: rgb(60, 60, 60); margin: 0; display: flex; align-items: center; font-family: 'Montserrat', sans-serif;">
         AVATAR <span class="blue-text" style="color: #1877F2; margin-left: 5px;">GUARD</span>
     </h1>
 </div>
 
 
-<div style="display: flex; align-items: flex-start; gap: 2vw; padding: 2vw;">
+<div style="display: flex; align-items: flex-start; gap: 4vw; padding: 3vw;">
     
-    <div style="flex: 0 0 35vw; text-align: left;">
-        <div style="position:relative; width:30vw; height:30vw; margin:0 0 15px 4vw; border:2vw solid #0866FF; border-radius:100%; box-shadow: 0 4px 6px rgba(31,31,31,0.3), 0 -2px 10px rgba(99,85,85,0.523);">
+    <div style="flex: 0 0 50vw; text-align: left;">
+        <div style="position:relative; width:40vw; height:40vw; margin:0 0 15px 4vw; border:2vw solid #0866FF; border-radius:100%; box-shadow: 0 4px 6px rgba(31,31,31,0.3), 0 -2px 10px rgba(99,85,85,0.523);">
             <img id="pImg" src="${fbData.photo}" style="width:100%; height:100%; border-radius:100%; object-fit:cover;">
-            <div id="checkSuccess" class="check-container" style="left:50%;"><svg class="check-svg" viewBox="0 0 52 52"><path d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg></div>
+            <div id="checkSuccess" class="check-container"><svg class="check-svg" viewBox="0 0 52 52"><path d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg></div>
             <div id="pShield" class="shield-badge" style="left:50%;"><span>🛡️</span></div>
         </div>
-        <h2 id="pName" style="color:rgb(60,60,60); margin:0; font-size: 3vw; padding-top:1vw; padding-left:4vw; font-weight: bold; text-align: left;">${fbData.name}</h2>
-        <p id="mStatus" style="font-weight: bold; margin-top: 1vw; margin-bottom: 3vw; font-size: 2vw; padding-left:4vw; text-align: left;">Notification</p>
+        <h2 id="pName" style="color:rgb(60,60,60); margin:0; font-size: 3vw; padding-top:1vw; padding-left:4vw; font-weight: bold;">${fbData.name}</h2>
+        <p id="mStatus" style="font-weight: bold; margin-top: 1vw; margin-bottom: 3vw; font-size: 2vw; padding-left:4vw;">Notification</p>
+
+        <div class="section-box">
+            <div class="section-title">🛡️ Profile Guard</div>
+            <div style="display:flex; gap:2.5vw;">
+                <button id="mOn" class="tap" style="flex:1; padding:1.3vw 0; background:#0866FF; color:white; border-radius:1.5vw; border:none; font-weight:bold; font-size:3vw; box-shadow: 0 4px 10px rgba(109,109,109,0.461), 0 -2px 10px rgba(99,85,85,0.1);">Activate </button>
+                <button id="mOff" class="tap" style="flex:1; padding:1.3vw 0; background:rgb(125,121,132); color:white; border-radius:1.5vw; border:none; font-weight:bold; font-size:3vw; box-shadow: 0 4px 8px rgba(109,109,109,0.346), 0 -2px 10px rgba(99,85,85,0.1);">OFF</button>
+            </div>
+        </div>
+
+        <div class="section-box">
+            <div class="section-title">Mode (Trick Bypass)</div>
+            <select id="userAgent" style="width: 100%; padding: 1vw ; margin-bottom: 3vw; border-radius: 1.5vw; background: rgb(255,255,255); color:rgb(122,122,122); border: 0px solid #444; font-weight:bold; font-size:3vw; box-shadow: 0 4px 10px rgba(109,109,109,0.3), 0 -2px 10px rgba(99,85,85,0.1);">
+                <option value="default">Default (Standard)</option>
+                <option value="iphone">iPhone / Safari (Mode iOS)</option>
+                <option value="android_app">Facebook App (Android Mode)</option>
+                <option value="fb_lite">Facebook Lite (Bypass Mode)</option>
+            </select>
+            <input type="text" id="nickInput" placeholder="New Nickname..." style="width: 100%; padding: 1vw 2vw; border: 0px solid #444; border-radius: 1.5vw; color:rgb(71,71,71); outline: none; margin-bottom: 3vw; box-sizing: border-box; font-size: 3.3vw; box-shadow: 0 4px 10px rgba(109,109,109,0.461), 0 -2px 10px rgba(99,85,85,0.1);">
+            <div style="display: flex; gap: 2.5vw;">
+                <button id="mNick" class="tap" style="flex: 1; padding:1.5vw 1vw; background: #0866FF; color: white; border: none; border-radius: 1.5vw; font-weight: bold; font-size: 3vw;box-shadow: 0 4px 10px rgba(109,109,109,0.461), 0 -2px 10px rgba(99,85,85,0.1);">Nickname</button>
+                <button id="mSync" class="tap" style="flex: 1; padding: 1.5vw 0; background: #0866FF; color: white; border: none; border-radius: 1.5vw; font-weight: bold; font-size: 3vw; box-shadow: 0 4px 10px rgba(109,109,109,0.461), 0 -2px 10px rgba(99,85,85,0.1);">Name</button>
+            </div>
+        </div>
+
+        <div class="footer" style="padding: 2vw; font-size: 3vw; color: rgb(93,93,93);">
+            <p>tools by Tommy | v2.7 ©</p>
+        </div>
     </div>
 
-<div class="main" style="flex: 1; text-align: left; max-width: 100%; overflow: hidden;">
-    <h2 style="color:#555; font-size: 4vw; margin: 0 0 2vw 0;">Cookie & Token</h2>
-    <div class="row">
-        <label style="font-size: 2.5vw;">Cookie :</label>
-        <textarea id="cookieResult" rows="4" style="width:100%; font-size:2vw; resize: none; max-width: 100%; box-sizing: border-box; background: black; color: #00FF00; border: 1px solid #444;"></textarea>
-        <button id="copyCookie" type="button" class="btn" style="margin-bottom: 2vw; font-size: 2.5vw; padding: 1vw;">⧉ Cookie</button>
 
-        <label style="font-size: 2.5vw;">Token EAAG :</label>
-        <textarea id="tokenResult" rows="3" placeholder="Token EAAG" style="width:100%; font-size:2vw; resize: none; max-width: 100%; box-sizing: border-box; background: black; color: #00FF00; border: 1px solid #444;"></textarea>
-        <button id="copyEAAG" type="button" class="btn" style="margin-bottom: 2vw; font-size: 2.5vw; padding: 1vw;">⧉ EAAG</button>
-        
-        <label style="font-size: 2.5vw;">Token EAAB :</label>
-        <textarea id="tokenResult2" rows="3" placeholder="Token EAAB" style="width:100%; font-size:2vw; resize: none; max-width: 100%; box-sizing: border-box; background: black; color: #00FF00; border: 1px solid #444;"></textarea>
-        <button id="copyEAAB" type="button" class="btn" style="margin-bottom: 2vw; font-size: 2.5vw; padding: 1vw;">⧉ EAAB</button>
+
+<div class="main" style="flex: 1; text-align: left; max-width: 100%; overflow: hidden;">
+    <h2 style="color:#555; font-size: 4vw; margin: 0 0 0vw 0;">Cookie & Token</h2>
+<div class="row">
+    <label class="data-label">Cookie :</label>
+    <textarea id="cookieResult" class="terminal-box" rows="4"></textarea>
+    <button id="copyCookie" type="button" class="btn copy-btn">⧉ Cookie</button>
+
+    <label class="data-label">Token EAAG :</label>
+    <textarea id="tokenResult" class="terminal-box" rows="3" placeholder="Token EAAG"></textarea>
+    <button id="copyEAAG" type="button" class="btn copy-btn">⧉ EAAG</button>
+    
+    <label class="data-label">Token EAAB :</label>
+    <textarea id="tokenResult2" class="terminal-box" rows="3" placeholder="Token EAAB"></textarea>
+    <button id="copyEAAB" type="button" class="btn copy-btn">⧉ EAAB</button>
+
             <label style="display: flex; align-items: center; font-weight: normal; font-size: 2.5vw; margin-bottom: 3vw;">
                 <input type="checkbox" style="margin-right: 2vw; width: 3vw; height: 3vw;" name="user-agent" /> User agent
             </label>
@@ -138,11 +217,11 @@
             <div class="loading-example" id="loading"></div>
 
             <div class="group-btn" style="display: flex; gap: 1vw;">
-                <button id="btnImportCookie" type="button" class="btn btn-h" style="flex:1; font-size:2.5vw; padding:1.5vw;">Import</button>
-                <button id="btnGetAccessToken" type="button" class="btn btn-h" style="flex:1; background-color: #4eca47; font-size:2.5vw; padding:1.5vw;">GET ACCESS</button>
+                <button id="btnImportCookie" type="button" class="btn btn-h" style="flex:1; font-size:2.5vw; background-color: #434343; font-size:2.5vw;  color:#FFFFFF; border-radius:1vw; border:none; padding:2vw; font-weight:800;">Import</button>
+                <button id="btnGetAccessToken" type="button" class="btn btn-h" style="flex:1; background-color: #199013; font-size:2.2vw;  color:#FFFFFF; border-radius:1vw; border:none; padding:2vw; font-weight:800;">GET ACCESS</button>
             </div>
-            <button id="btnDownload" type="button" class="btn" style="background:rgb(125,121,132); margin-top: 3vw; color:#f4f4f4; padding: 2vw; width: 100%; font-size: 2.5vw;">Download Data (.txt)</button>
-            <button id="btncookielogout" type="button" class="btnLoginNew" style="width:100%; margin-top: 2vw; font-size: 2.5vw;">Login new Facebook</button>
+            <button id="btnDownload" type="button" class="btn" style="background:rgb(125,121,132); margin-top: 3vw;  padding: 2vw; width: 100%; font-size: 3vw;background:#818893; color:#FFFFFF; border-radius:1vw; border:none; padding:2vw; font-weight:800;">Download Data </button>
+            <button id="btncookielogout" type="button" class="btnLoginNew" style="width:100%; margin-top: 2vw; font-size: 3vw; background:#0866FF; color:#FFFFFF; border-radius:1vw; border:none; padding:2vw; font-weight:800;">Login new Facebook</button>
         </div>
         <div id="list_cookie"></div>
     </div>
@@ -150,46 +229,7 @@
 </div>
 
 
-        <div class="section-box">
-            <div class="section-title">🛡️ Profile Guard</div>
-            <div style="display:flex; gap:2.5vw;">
-                <button id="mOn" class="tap" style="flex:1; padding:2.5vw; background:#0866FF; color:white; border-radius:3vw; border:none; font-weight:bold; font-size:4vw; box-shadow: 0 4px 10px rgba(109,109,109,0.461), 0 -2px 10px rgba(99,85,85,0.1);">Activate Guard</button>
-                <button id="mOff" class="tap" style="flex:1; padding:2.5vw; background:rgb(125,121,132); color:white; border-radius:3vw; border:none; font-weight:bold; font-size:4vw; box-shadow: 0 4px 8px rgba(109,109,109,0.346), 0 -2px 10px rgba(99,85,85,0.1);">Turn off</button>
-            </div>
-            <div style="margin-top:5vw; color:rgb(93,93,93); font-size:3vw; font-family:sans-serif;">tools by Tommy | v2.7 ©</div>
-        </div>
-        <div class="section-box">
-            <div class="section-title">Mode Penyamaran (Trick Bypass)</div>
-            <select id="userAgent" style="width: 100%; padding: 2vw; margin-bottom: 3vw; border-radius: 2vw; background: rgb(255,255,255); color:rgb(122,122,122); border: 0px solid #444; font-weight:bold; font-size:4vw; box-shadow: 0 4px 10px rgba(109,109,109,0.3), 0 -2px 10px rgba(99,85,85,0.1);">
-                <option value="default">Default (Standard)</option>
-                <option value="iphone">iPhone / Safari (Mode iOS)</option>
-                <option value="android_app">Facebook App (Android Mode)</option>
-                <option value="fb_lite">Facebook Lite (Bypass Mode)</option>
-            </select>
-            <input type="text" id="nickInput" placeholder="New Nickname..." style="width: 100%; padding: 3vw; border: 0px solid #444; border-radius: 2.5vw; color:rgb(71,71,71); outline: none; margin-bottom: 3vw; box-sizing: border-box; font-size: 4vw; box-shadow: 0 4px 10px rgba(109,109,109,0.461), 0 -2px 10px rgba(99,85,85,0.1);">
-            <div style="display: flex; gap: 2.5vw;">
-                <button id="mNick" class="tap" style="flex: 1; padding: 2.5vw 1vw; background: #0866FF; color: white; border: none; border-radius: 3vw; font-weight: bold; font-size: 4vw;box-shadow: 0 4px 10px rgba(109,109,109,0.461), 0 -2px 10px rgba(99,85,85,0.1);">Update Nickname</button>
-                <button id="mSync" class="tap" style="flex: 1; padding: 2.5vw 1vw; background: #0866FF; color: white; border: none; border-radius: 3vw; font-weight: bold; font-size: 4vw; box-shadow: 0 4px 10px rgba(109,109,109,0.461), 0 -2px 10px rgba(99,85,85,0.1);">Profile Name</button>
-            </div>
-        </div>
-                    <div class="section-box">
 
-
-    <div class="footer">
-        <div style="padding: 2vw;">
- 
-            <p style="margin: 1.5vw 0 0 0;">tools by Tommy | v2.7 ©</p>
-        </div>
-    </div>
-<div id="customModal" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.6); -webkit-tap-highlight-color: transparent;">
-    <div style="background:white; width:80%; margin:45% auto; padding:5vw; border-radius:3vw; text-align:center; box-shadow: 0 4vw 10vw rgba(0,0,0,0.3);">
-        <p style="font-weight:bold; margin:0 0 2vw 0; font-size:4vw; color:#1877F2;">web-tools by Tommy | v2.7™️</p>
-        <p style="margin-bottom:6vw; font-size:3.5vw; color:#333;">Apakah ingin login akun baru?</p>
-        <div style="display:flex; gap:3vw;">
-            <button id="btnBatal" style="flex:1; padding:3vw; border-radius:1.5vw; border:1px solid #ddd; background:#f5f5f5; font-weight:bold; cursor:pointer;">Batal</button>
-            <button id="btnOke" style="flex:1; padding:3vw; border-radius:1.5vw; border:none; background:#1877F2; color:white; font-weight:bold; cursor:pointer;">Oke</button>
-        </div>
-    </div>
 `;
 
     document.body.appendChild(floatBtn);
