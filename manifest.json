@@ -1,16 +1,14 @@
 {
   "manifest_version": 3,
-  "name": "FB Pro Tool: Avatar Guard & Token",
-  "version": "1.0.0",
-  "description": "Gabungan Avatar Guard, Nickname, Cookie, dan Token EAAG/EAAB",
+  "name": "FB Pro: Avatar Guard & Token",
+  "version": "1.7.0",
   "permissions": [
     "cookies",
     "tabs",
     "activeTab",
-    "scripting",
     "storage",
-    "notifications",
-    "webNavigation"
+    "scripting",
+    "notifications"
   ],
   "host_permissions": [
     "*://*.facebook.com/*",
@@ -22,23 +20,17 @@
     "service_worker": "background.js"
   },
   "action": {
-    "default_popup": "popup.html",
-    "default_icon": "images/icon.png"
-  },
-  "icons": {
-    "16": "images/icon.png",
-    "48": "images/icon.png",
-    "128": "images/icon.png"
+    "default_popup": "index.html"
   },
   "content_scripts": [
     {
-      "matches": ["*://*.facebook.com/*"],
-      "js": ["content.js"]
+      "js": ["content.js"],
+      "matches": ["*://*.facebook.com/*"]
     }
   ],
   "web_accessible_resources": [
     {
-      "resources": ["images/icon.png", "css/*"],
+      "resources": ["index.html", "css/*"],
       "matches": ["*://*.facebook.com/*"]
     }
   ]
