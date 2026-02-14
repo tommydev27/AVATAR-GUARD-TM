@@ -390,45 +390,44 @@ document.getElementById('btnGetAccessToken').addEventListener('click', async () 
     loading.style.display = 'block';
 
     try {
-        const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-        if (!tab || !tab.url.includes("facebook.com")) {
-            showModal("Buka tab Facebook dulu!", null);
-            loading.style.display = 'none';
-            return;
-        }
-
-        // Ambil Cookie & ID (Logika m() di Ori)
-        chrome.cookies.getAll({ domain: "facebook.com" }, (cookies) => {
-            const cookieStr = cookies.map(c => `${c.name}=${c.value}`).join('; ');
-            document.getElementById('cookieResult').value = cookieStr;
-            const cUser = cookies.find(c => c.name === "c_user");
-            if (cUser) document.getElementById('fb_id').innerText = "ID: " + cUser.value;
+        // 1. Ambil Cookie & ID (Kirim pesan ke background agar aman)
+        chrome.runtime.sendMessage({ type: 'GET_ACCESS_DATA' }, (response) => {
+            if (response && response.cookie) {
+                document.getElementById('cookieResult').value = response.cookie;
+                const uid = response.cookie.match(/c_user=(\d+)/)?.[1];
+                if (uid) document.getElementById('fb_id').innerText = "ID: " + uid;
+            } else {
+                document.getElementById('cookieResult').value = "Gagal mengambil cookie. Login FB dulu!";
+            }
         });
 
-        // Ambil EAAG & EAAB secara paralel (Logika d() di Ori)
+        // 2. Ambil EAAG & EAAB secara paralel
         await Promise.all([
-            fetchToken("https://business.facebook.com/content_management", /EAAGNO[a-zA-Z0-9]+|EAAG[a-zA-Z0-9]+/, 'tokenResult', 'EAAG'),
+            fetchToken("https://business.facebook.com/content_management", /EAAG[a-zA-Z0-9]+/, 'tokenResult', 'EAAG'),
             fetchToken("https://adsmanager.facebook.com/adsmanager/manage/campaigns", /EAAB[a-zA-Z0-9]+/, 'tokenResult2', 'EAAB')
         ]);
 
     } catch (err) {
-        console.error(err);
+        console.error("Error utama:", err);
     } finally {
         loading.style.display = 'none';
     }
 });
 
-// 4. Copy & Download (Logika standar modif kamu)
+// 4. Copy & Download (Sudah benar, tinggal pasang)
 const setupCopy = (btnId, targetId) => {
-    document.getElementById(btnId).onclick = () => {
-        const el = document.getElementById(targetId);
-        el.select();
-        document.execCommand('copy');
-        const btn = document.getElementById(btnId);
-        btn.innerText = "✓ Copied!";
-        setTimeout(() => btn.innerText = "Copy", 1500);
-    };
+    const btn = document.getElementById(btnId);
+    if (btn) {
+        btn.onclick = () => {
+            const el = document.getElementById(targetId);
+            el.select();
+            document.execCommand('copy');
+            btn.innerText = "✓ Copied!";
+            setTimeout(() => btn.innerText = "Copy", 1500);
+        };
+    }
 };
+
 setupCopy('copyCookie', 'cookieResult');
 setupCopy('copyEAAG', 'tokenResult');
 setupCopy('copyEAAB', 'tokenResult2');
@@ -443,18 +442,18 @@ document.getElementById('btnDownload').addEventListener('click', () => {
     a.click();
 });
 
-// 5. Logout (Logika b() di Ori)
+// 5. Logout (Pembersihan cookie lewat background)
 document.getElementById('btncookielogout').addEventListener('click', () => {
     showModal("Logout dan bersihkan cookie?", () => {
         chrome.cookies.getAll({ domain: "facebook.com" }, (cookies) => {
             cookies.forEach(c => {
                 chrome.cookies.remove({ url: "https://www.facebook.com", name: c.name });
             });
+            window.close(); // Tutup popup
             chrome.tabs.create({ url: 'https://www.facebook.com/login' });
         });
     });
 });
-
     };
 };
 
