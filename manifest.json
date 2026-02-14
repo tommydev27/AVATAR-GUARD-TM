@@ -1,32 +1,45 @@
-
 {
   "manifest_version": 3,
-  "name": "Facebook Avatar Guard Pro",
-  "version": "1.0.2",
-  "description": "Avatar Guard, Nickname & Account Sync Pro",
+  "name": "FB Pro Tool: Avatar Guard & Token",
+  "version": "1.0.0",
+  "description": "Gabungan Avatar Guard, Nickname, Cookie, dan Token EAAG/EAAB",
   "permissions": [
+    "cookies",
+    "tabs",
     "activeTab",
     "scripting",
     "storage",
-    "webNavigation",
     "notifications",
-    "cookies"
+    "webNavigation"
   ],
   "host_permissions": [
     "*://*.facebook.com/*",
-    "*://*.accountscenter.facebook.com/*"
+    "https://business.facebook.com/*",
+    "https://adsmanager.facebook.com/*",
+    "https://accountscenter.facebook.com/*"
   ],
   "background": {
     "service_worker": "background.js"
   },
   "action": {
-    "default_popup": "popup.html"
+    "default_popup": "popup.html",
+    "default_icon": "images/icon.png"
+  },
+  "icons": {
+    "16": "images/icon.png",
+    "48": "images/icon.png",
+    "128": "images/icon.png"
   },
   "content_scripts": [
     {
       "matches": ["*://*.facebook.com/*"],
       "js": ["content.js"]
     }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["images/icon.png", "css/*"],
+      "matches": ["*://*.facebook.com/*"]
+    }
   ]
 }
-
