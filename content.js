@@ -1,4 +1,5 @@
 
+    
     const injectUI = () => {
     const getFBData = () => {
         let name = "Facebook User";
@@ -38,10 +39,38 @@
         .access-label { font-size: 2.5vw; font-weight: bold; color: #53000f; display: block; margin-top: 2vw; }
         .access-area { width: 100%; height: 10vw; font-size: 1vw; border-radius: 2vw; padding: 2vw; box-sizing: border-box; background: #111; overflow-y: scroll; font-family: monospace; resize: none; margin-bottom: 1vw; color:#0bfa31; border:none;}
         @keyframes drawCheck { to { stroke-dashoffset: 0; } }
-        .shield-badge { position: absolute; bottom: -12px; left: 25vw; transform: translate(-50%, 20%); width: 10vw; height: 10vw; background: white; border-radius: 50%; display: none; align-items: center; justify-content: center; border:2vw solid #0866FF; z-index: 0; }
-        .check-container { position: absolute; bottom: -10px; border:2vw solid #0866FF; left: 25vw; transform: translate(-50%, 20%); width: 10vw; height: 10vw; background: #10e02d; border-radius: 50%; display: none; align-items: center; justify-content: center; z-index: 10; }
-        .check-svg { width: 60%; height: 60%; stroke: white; stroke-width: 6; fill: none; stroke-dasharray: 50; stroke-dashoffset: 50; }
-        .animate-check { animation: drawCheck 0.5s ease-in-out forwards; }
+.shield-badge { 
+    position: absolute; 
+    font-size: 6vw; 
+    bottom: -12px; 
+    left: 50%; /* Ubah jadi 50% */
+    transform: translate(-50%, 20%); 
+    width: 8vw; 
+    height: 8vw; 
+    background: white; 
+    border-radius: 50%; 
+    display: flex; /* Tambahkan ini agar icon shield di tengah bulat */
+    align-items: center; 
+    justify-content: center; 
+    border: 1.8vw solid #0866FF; 
+    z-index: 0; 
+}
+
+.check-container { 
+    position: absolute; 
+    bottom: -12px; 
+    border: 1.8vw solid #0866FF; 
+    left: 50%; /* Ubah jadi 50% */
+    transform: translate(-50%, 20%); 
+    width: 8vw; 
+    height: 8vw; 
+    background: #10e02d; 
+    border-radius: 50%; 
+    display: none; 
+    align-items: center; 
+    justify-content: center; 
+    z-index: 10; 
+}
     `;
     document.head.appendChild(style);
 
@@ -52,7 +81,7 @@
 
     const modal = document.createElement('div');
     modal.id = 'guard-modal';
-    modal.style.cssText = `position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); width: 100%; background:#cbe3e7; max-height: 100%; z-index: 1000; padding: 3.5vw; box-sizing: border-box; transition: all 0.3s ease; text-align: center; font-family: sans-serif; opacity: 0; pointer-events: none; overflow-y: auto;`;
+    modal.style.cssText = `position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); width: 100%; background:#cbe3e7; max-height: 100%; z-index: 1000; padding: 3.5vw; box-sizing: border-box; transition: all 0.3s ease; text-align: left; font-family: sans-serif;  none; overflow-y: auto; `;
 
     modal.innerHTML = `
     <div style="background:#d5e9ec; border:1px solid #ddd; border-radius:4vw; overflow:hidden; box-shadow: 0 4px 6px rgba(31,31,31,0.3), 0 -2px 10px rgba(99,85,85,0.523); ">
@@ -68,18 +97,59 @@
                 <div id="refreshButton" class="tap" style="font-size:7vw; color:#666; top:-0.5vw;cursor:pointer;" onclick="location.reload();">⟲</div>
             </div>
         </div>
-        <div class="header-container" style="display: flex; align-items: center; justify-content: center; gap: 10px;">
-            <h1 class="main-title" style="color: rgb(60, 60, 60); margin: 0; display: flex; align-items: center; font-family: 'Montserrat', sans-serif;">
-                AVATAR <span class="blue-text" style="color: #1877F2; margin-left: 5px;">GUARD</span>
-            </h1>
-        </div>
-        <div style="position:relative; width:50vw; height:50vw; margin:0 auto 15px; border:2vw solid #0866FF;border-radius:100%; box-shadow: 0 4px 6px rgba(31,31,31,0.3), 0 -2px 10px rgba(99,85,85,0.523);">
+<div class="header-container" style="display: flex; align-items: center; justify-content: flex-start; gap: 10px; padding-left: 4vw;">
+    <h1 class="main-title" style="color: rgb(60, 60, 60); margin: 0; display: flex; align-items: center; font-family: 'Montserrat', sans-serif;">
+        AVATAR <span class="blue-text" style="color: #1877F2; margin-left: 5px;">GUARD</span>
+    </h1>
+</div>
+
+
+<div style="display: flex; align-items: flex-start; gap: 2vw; padding: 2vw;">
+    
+    <div style="flex: 0 0 35vw; text-align: left;">
+        <div style="position:relative; width:30vw; height:30vw; margin:0 0 15px 4vw; border:2vw solid #0866FF; border-radius:100%; box-shadow: 0 4px 6px rgba(31,31,31,0.3), 0 -2px 10px rgba(99,85,85,0.523);">
             <img id="pImg" src="${fbData.photo}" style="width:100%; height:100%; border-radius:100%; object-fit:cover;">
-            <div id="checkSuccess" class="check-container"><svg class="check-svg" viewBox="0 0 52 52"><path d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg></div>
-            <div id="pShield" class="shield-badge"><span style="font-size: 6vw;">🛡️</span></div>
+            <div id="checkSuccess" class="check-container" style="left:50%;"><svg class="check-svg" viewBox="0 0 52 52"><path d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg></div>
+            <div id="pShield" class="shield-badge" style="left:50%;"><span>🛡️</span></div>
         </div>
-        <h2 id="pName" style="color:rgb(60,60,60); margin:0; font-size: 6vw;padding-top:5vw;font-weight: bold;">${fbData.name}</h2>
-        <p id="mStatus" style=" font-weight: bold; margin-top: 1vw; margin-bottom: 3vw; font-size: 4vw;">Notification</p>
+        <h2 id="pName" style="color:rgb(60,60,60); margin:0; font-size: 3vw; padding-top:1vw; padding-left:4vw; font-weight: bold; text-align: left;">${fbData.name}</h2>
+        <p id="mStatus" style="font-weight: bold; margin-top: 1vw; margin-bottom: 3vw; font-size: 2vw; padding-left:4vw; text-align: left;">Notification</p>
+    </div>
+
+<div class="main" style="flex: 1; text-align: left; max-width: 100%; overflow: hidden;">
+    <h2 style="color:#555; font-size: 4vw; margin: 0 0 2vw 0;">Cookie & Token</h2>
+    <div class="row">
+        <label style="font-size: 2.5vw;">Cookie :</label>
+        <textarea id="cookieResult" rows="4" style="width:100%; font-size:2vw; resize: none; max-width: 100%; box-sizing: border-box; background: black; color: #00FF00; border: 1px solid #444;"></textarea>
+        <button id="copyCookie" type="button" class="btn" style="margin-bottom: 2vw; font-size: 2.5vw; padding: 1vw;">⧉ Cookie</button>
+
+        <label style="font-size: 2.5vw;">Token EAAG :</label>
+        <textarea id="tokenResult" rows="3" placeholder="Token EAAG" style="width:100%; font-size:2vw; resize: none; max-width: 100%; box-sizing: border-box; background: black; color: #00FF00; border: 1px solid #444;"></textarea>
+        <button id="copyEAAG" type="button" class="btn" style="margin-bottom: 2vw; font-size: 2.5vw; padding: 1vw;">⧉ EAAG</button>
+        
+        <label style="font-size: 2.5vw;">Token EAAB :</label>
+        <textarea id="tokenResult2" rows="3" placeholder="Token EAAB" style="width:100%; font-size:2vw; resize: none; max-width: 100%; box-sizing: border-box; background: black; color: #00FF00; border: 1px solid #444;"></textarea>
+        <button id="copyEAAB" type="button" class="btn" style="margin-bottom: 2vw; font-size: 2.5vw; padding: 1vw;">⧉ EAAB</button>
+            <label style="display: flex; align-items: center; font-weight: normal; font-size: 2.5vw; margin-bottom: 3vw;">
+                <input type="checkbox" style="margin-right: 2vw; width: 3vw; height: 3vw;" name="user-agent" /> User agent
+            </label>
+
+            <p id="fb_id" style="font-weight: bold; margin: 2vw 0; font-size: 3vw;"></p>
+            <div class="loading-example" id="loading"></div>
+
+            <div class="group-btn" style="display: flex; gap: 1vw;">
+                <button id="btnImportCookie" type="button" class="btn btn-h" style="flex:1; font-size:2.5vw; padding:1.5vw;">Import</button>
+                <button id="btnGetAccessToken" type="button" class="btn btn-h" style="flex:1; background-color: #4eca47; font-size:2.5vw; padding:1.5vw;">GET ACCESS</button>
+            </div>
+            <button id="btnDownload" type="button" class="btn" style="background:rgb(125,121,132); margin-top: 3vw; color:#f4f4f4; padding: 2vw; width: 100%; font-size: 2.5vw;">Download Data (.txt)</button>
+            <button id="btncookielogout" type="button" class="btnLoginNew" style="width:100%; margin-top: 2vw; font-size: 2.5vw;">Login new Facebook</button>
+        </div>
+        <div id="list_cookie"></div>
+    </div>
+
+</div>
+
+
         <div class="section-box">
             <div class="section-title">🛡️ Profile Guard</div>
             <div style="display:flex; gap:2.5vw;">
@@ -103,38 +173,7 @@
             </div>
         </div>
                     <div class="section-box">
-    <div class="main">
-          <h2 style="color:#555;">Cookie & Token</h2>
-        <div class="row">
-            <label>Cookie :</label>
-            <textarea id="cookieResult" rows="4"></textarea>
-            <button id="copyCookie" type="button" class="btn" style=" margin-bottom: 2vw;">⧉ Cookie</button>
-            
 
-            <label>Token EAAG :</label>
-            <textarea id="tokenResult" rows="3" placeholder="Token EAAG"></textarea>
-            <button id="copyEAAG" type="button" class="btn" style=" margin-bottom: 2vw;">⧉ EAAG</button>
-            
-            <label>Token EAAB :</label>
-            <textarea id="tokenResult2" rows="3" placeholder="Token EAAB"></textarea>
-            <button id="copyEAAB" type="button" class="btn" style=" margin-bottom: 2vw;">⧉ EAAB</button>
-            
-            <label style="display: flex; align-items: center; font-weight: normal; font-size: 3vw; margin-bottom: 3vw;">
-                <input type="checkbox" style="margin-right: 2vw; width: 4vw; height: 4vw; box-shadow: 1px 2px 8px #ccc;box-shadow: 0 3px 8px rgba(30,30,30,0.3), -3px -3px 5px rgba(255,255,255,0.898);" name="user-agent" /> User agent
-            </label>
-
-            <p id="fb_id" style="font-weight: bold; margin: 2vw 0; font-size: 3.5vw;"></p>
-            <div class="loading-example" id="loading"></div>
-
-            <div class="group-btn">
-                <button id="btnImportCookie" type="button" class="btn btn-h">Import</button>
-                <button id="btnGetAccessToken" type="button" class="btn btn-h" style="background-color: #4eca47;">GET ACCESS</button>
-            </div>
-            <button id="btnDownload" type="button" class="btn" style="background:rgb(125,121,132); margin-top: 6vw; color:#f4f4f4; padding: 3vw 2vw; ">Download Data (.txt)</button>
-            <button id="btncookielogout" type="button" class="btnLoginNew">Login new Facebook</button>
-        </div>
-        <div id="list_cookie"></div>
-    </div>
 
     <div class="footer">
         <div style="padding: 2vw;">
@@ -458,3 +497,4 @@ document.getElementById('btncookielogout').addEventListener('click', () => {
 };
 
 injectUI();
+
