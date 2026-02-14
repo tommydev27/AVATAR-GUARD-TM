@@ -1,5 +1,14 @@
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    // 1. LOGIKA UNTUK AVATAR GUARD
+    // 1. LOGIKA UNTUK FETCH DATA FACEBOOK (TOKEN EAAG/EAAB)
+    if (message.action === "fetchFB") {
+        fetch(message.url, { credentials: 'include' })
+            .then(response => response.text())
+            .then(text => sendResponse({ data: text }))
+            .catch(err => sendResponse({ error: err.message }));
+        return true; 
+    }
+
+    // 2. LOGIKA UNTUK AVATAR GUARD
     if (message.type === 'TOGGLE_GUARD') {
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             if (!tabs || !tabs[0]) {
@@ -21,7 +30,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         return true;
     }
 
-    // 2. LOGIKA UNTUK GANTI NAMA PANGGILAN
+    // 3. LOGIKA UNTUK GANTI NAMA PANGGILAN
     if (message.type === 'CHANGE_NICKNAME') {
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             if (!tabs || !tabs[0]) {
@@ -43,7 +52,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         return true;
     }
 
-    // 3. LOGIKA UNTUK AKSES COOKIE
+    // 4. LOGIKA UNTUK AKSES COOKIE
     if (message.type === 'GET_ACCESS_DATA') {
         chrome.cookies.getAll({ domain: ".facebook.com" }, (cookies) => {
             const essential = cookies.filter(c => ['c_user', 'xs', 'fr', 'datr'].includes(c.name));
@@ -54,6 +63,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }
 });
 
+// Fungsi pembantu tetap diletakkan di luar listener
 function toggleAvatarGuard(userId, fbDtsg, toggle) {
     const generateUUID = () => {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
