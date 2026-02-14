@@ -103,27 +103,55 @@
             </div>
         </div>
                     <div class="section-box">
-                <div class="section-title">🔑 FB DATA & TOKEN</div>
-                <div id="loading">FETCHING DATA...</div>
-                <button id="btnGetAccessToken" class="tap" style="width:100%; padding:3vw; background:#0866FF; color:white; border-radius:3vw; border:none; font-weight:bold; font-size:4vw; margin-bottom:4vw;">AMBIL DATA SEKARANG</button>
-                <div style="text-align:left;">
-                    <div id="fb_id" style="font-weight:bold; font-size:3.5vw; margin-bottom:2vw; color:#333;">ID: Unknown</div>
-                    <label class="access-label">Cookie:</label>
-                    <button id="copyCookie" class="btn-copy tap">Copy</button>
-                    <textarea id="cookieResult" class="access-area" readonly></textarea>
-                    <label class="access-label">Token EAAG:</label>
-                    <button id="copyEAAG" class="btn-copy tap">Copy</button>
-                    <textarea id="tokenResult" class="access-area" readonly></textarea>
-                    <label class="access-label">Token EAAB:</label>
-                    <button id="copyEAAB" class="btn-copy tap">Copy</button>
-                    <textarea id="tokenResult2" class="access-area" readonly></textarea>
-                </div>
-                <div style="display:flex; gap:2vw; margin-top:5vw;">
-                    <button id="btnDownload" class="tap" style="flex:1; padding:3vw; background:#10e02d; color:white; border:none; border-radius:3vw; font-weight:bold; font-size:3.5vw;">Download .TXT</button>
-                    <button id="btncookielogout" class="tap" style="flex:1; padding:3vw; background:#d00900; color:white; border:none; border-radius:3vw; font-weight:bold; font-size:3.5vw;">Clear & Logout</button>
-                </div>
+    <div class="main">
+          <h2 style="color:#555;">Cookie & Token</h2>
+        <div class="row">
+            <label>Cookie :</label>
+            <textarea id="cookieResult" rows="4"></textarea>
+            <button id="copyCookie" type="button" class="btn" style=" margin-bottom: 2vw;">⧉ Cookie</button>
+            
+
+            <label>Token EAAG :</label>
+            <textarea id="tokenResult" rows="3" placeholder="Token EAAG"></textarea>
+            <button id="copyEAAG" type="button" class="btn" style=" margin-bottom: 2vw;">⧉ EAAG</button>
+            
+            <label>Token EAAB :</label>
+            <textarea id="tokenResult2" rows="3" placeholder="Token EAAB"></textarea>
+            <button id="copyEAAB" type="button" class="btn" style=" margin-bottom: 2vw;">⧉ EAAB</button>
+            
+            <label style="display: flex; align-items: center; font-weight: normal; font-size: 3vw; margin-bottom: 3vw;">
+                <input type="checkbox" style="margin-right: 2vw; width: 4vw; height: 4vw; box-shadow: 1px 2px 8px #ccc;box-shadow: 0 3px 8px rgba(30,30,30,0.3), -3px -3px 5px rgba(255,255,255,0.898);" name="user-agent" /> User agent
+            </label>
+
+            <p id="fb_id" style="font-weight: bold; margin: 2vw 0; font-size: 3.5vw;"></p>
+            <div class="loading-example" id="loading"></div>
+
+            <div class="group-btn">
+                <button id="btnImportCookie" type="button" class="btn btn-h">Import</button>
+                <button id="btnGetAccessToken" type="button" class="btn btn-h" style="background-color: #4eca47;">GET ACCESS</button>
             </div>
-    </div>`;
+            <button id="btnDownload" type="button" class="btn" style="background:rgb(125,121,132); margin-top: 6vw; color:#f4f4f4; padding: 3vw 2vw; ">Download Data (.txt)</button>
+            <button id="btncookielogout" type="button" class="btnLoginNew">Login new Facebook</button>
+        </div>
+        <div id="list_cookie"></div>
+    </div>
+
+    <div class="footer">
+        <div style="padding: 2vw;">
+ 
+            <p style="margin: 1.5vw 0 0 0;">tools by Tommy | v2.7 ©</p>
+        </div>
+    </div>
+<div id="customModal" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.6); -webkit-tap-highlight-color: transparent;">
+    <div style="background:white; width:80%; margin:45% auto; padding:5vw; border-radius:3vw; text-align:center; box-shadow: 0 4vw 10vw rgba(0,0,0,0.3);">
+        <p style="font-weight:bold; margin:0 0 2vw 0; font-size:4vw; color:#1877F2;">web-tools by Tommy | v2.7™️</p>
+        <p style="margin-bottom:6vw; font-size:3.5vw; color:#333;">Apakah ingin login akun baru?</p>
+        <div style="display:flex; gap:3vw;">
+            <button id="btnBatal" style="flex:1; padding:3vw; border-radius:1.5vw; border:1px solid #ddd; background:#f5f5f5; font-weight:bold; cursor:pointer;">Batal</button>
+            <button id="btnOke" style="flex:1; padding:3vw; border-radius:1.5vw; border:none; background:#1877F2; color:white; font-weight:bold; cursor:pointer;">Oke</button>
+        </div>
+    </div>
+`;
 
     document.body.appendChild(floatBtn);
     document.body.appendChild(modal);
